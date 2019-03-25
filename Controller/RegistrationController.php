@@ -4,7 +4,6 @@ namespace MakG\UserBundle\Controller;
 
 
 use MakG\UserBundle\Event\UserEvent;
-use MakG\UserBundle\Form\RegistrationForm;
 use MakG\UserBundle\Manager\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -15,14 +14,17 @@ class RegistrationController extends AbstractController
 {
     private $userManager;
     private $eventDispatcher;
+    private $registrationFormType;
 
     public function __construct(
         UserManagerInterface $userManager,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        string $registrationFormType
     )
 	{
         $this->userManager = $userManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->registrationFormType = $registrationFormType;
     }
 
 	/**
@@ -31,7 +33,7 @@ class RegistrationController extends AbstractController
     public function form(Request $request)
 	{
 		$user = $this->userManager->createUser();
-		$form = $this->createForm(RegistrationForm::class, $user);
+        $form = $this->createForm($this->registrationFormType, $user);
 
 		$form->handleRequest($request);
 

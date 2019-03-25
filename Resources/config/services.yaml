@@ -7,8 +7,45 @@ services:
             - '@MakG\UserBundle\Manager\UserManager'
             - '@event_dispatcher'
 
-    MakG\UserBundle\Manager\UserManager:
+    MakG\UserBundle\Controller\ResettingController:
+        class: MakG\UserBundle\Controller\ResettingController
+        public: true
+        arguments:
+            - '@MakG\UserBundle\Manager\UserManager'
+            - '@event_dispatcher'
+            - '@translator'
+            - 0
+            - 0
+
+    # Services
+    makg_user.user_manager:
         class: MakG\UserBundle\Manager\UserManager
+        arguments:
+            - ~
+            - '@doctrine.orm.entity_manager'
+            - '@security.password_encoder'
+
+    makg_user.mailer:
+        class: MakG\UserBundle\Mailer\Mailer
+        arguments:
+            - '@mailer'
+            - '@twig'
+
+    makg_user.listener.generate_confirmation_token:
+        class: MakG\UserBundle\EventListener\GenerateConfirmationToken
+        arguments:
+            - '@security.token_generator'
+
+    makg_user.listener.send_emails:
+        class: MakG\UserBundle\EventListener\SendEmails
+        arguments:
+            - '@makg_user.mailer'
+            - '@logger'
+
+    # Aliases
+    MakG\UserBundle\Mailer\MailerInterface:
+        alias: 'makg_user.mailer'
 
     MakG\UserBundle\Manager\UserManagerInterface:
-        alias: MakG\UserBundle\Manager\UserManager
+        alias: 'makg_user.user_manager'
+    

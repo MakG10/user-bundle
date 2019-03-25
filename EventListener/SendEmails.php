@@ -1,6 +1,6 @@
 <?php
 
-namespace MakG\UserBundle\EventSubscriber;
+namespace MakG\UserBundle\EventListener;
 
 
 

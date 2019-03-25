@@ -12,4 +12,6 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function getConfirmationToken(): ?string;
     public function setConfirmationToken(?string $token);
     public function hasPasswordRequestExpired(int $ttl): bool;
+
+    public function getPlainPassword(): ?string;
 }

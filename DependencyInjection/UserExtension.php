@@ -3,6 +3,7 @@
 namespace MakG\UserBundle\DependencyInjection;
 
 
+use MakG\UserBundle\Controller\RegistrationController;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -17,5 +18,11 @@ class UserExtension extends Extension
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
+
+        $definition = $container->getDefinition('makg_user.user_manager');
+        $definition->replaceArgument(0, $config['user_class']);
+
+        $definition = $container->getDefinition(RegistrationController::class);
+        $definition->replaceArgument(2, $config['form_types']['registration']);
     }
 }
