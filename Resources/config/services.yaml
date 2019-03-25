@@ -1,0 +1,14 @@
+services:
+    # Controllers
+    MakG\UserBundle\Controller\RegistrationController:
+        class: MakG\UserBundle\Controller\RegistrationController
+        public: true
+        arguments:
+            - '@MakG\UserBundle\Manager\UserManager'
+            - '@event_dispatcher'
+
+    MakG\UserBundle\Manager\UserManager:
+        class: MakG\UserBundle\Manager\UserManager
+
+    MakG\UserBundle\Manager\UserManagerInterface:
+        alias: MakG\UserBundle\Manager\UserManager

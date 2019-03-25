@@ -1,0 +1,44 @@
+<?php
+
+namespace MakG\UserBundle\Event;
+
+
+use MakG\UserBundle\Entity\UserInterface;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\Response;
+
+class UserEvent extends Event
+{
+    public const REGISTRATION_SUCCESS = 'mg_user.registration_success';
+    public const REGISTRATION_COMPLETED = 'mg_user.registration_completed';
+    public const PASSWORD_RESET_REQUESTED = 'mg_user.password_reset_requested';
+    public const PASSWORD_RESET_COMPLETED = 'mg_user.password_reset_completed';
+
+    private $user;
+    private $response;
+
+    public function __construct(UserInterface $user)
+    {
+        $this->user = $user;
+    }
+
+    public function getUser(): UserInterface
+    {
+        return $this->user;
+    }
+
+    public function setUser(UserInterface $user): void
+    {
+        $this->user = $user;
+    }
+
+    public function getResponse(): ?Response
+    {
+        return $this->response;
+    }
+
+    public function setResponse(?Response $response): void
+    {
+        $this->response = $response;
+    }
+}

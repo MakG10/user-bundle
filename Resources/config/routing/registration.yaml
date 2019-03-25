@@ -1,0 +1,3 @@
+mg_user_registration:
+    resource: '@UserBundle/Controller/RegistrationController.php'
+    type: annotation
