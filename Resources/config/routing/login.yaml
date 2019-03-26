@@ -1,0 +1,3 @@
+mg_user_resetting:
+    resource: '@UserBundle/Controller/SecurityController.php'
+    type: annotation

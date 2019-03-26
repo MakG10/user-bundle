@@ -4,6 +4,8 @@ namespace MakG\UserBundle\DependencyInjection;
 
 
 use MakG\UserBundle\Controller\RegistrationController;
+use MakG\UserBundle\Controller\ResettingController;
+use MakG\UserBundle\Controller\SecurityController;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -24,5 +26,14 @@ class UserExtension extends Extension
 
         $definition = $container->getDefinition(RegistrationController::class);
         $definition->replaceArgument(2, $config['form_types']['registration']);
+
+        $definition = $container->getDefinition(ResettingController::class);
+        $definition->replaceArgument(5, $config['form_types']['resetting_request']);
+
+        $definition = $container->getDefinition(ResettingController::class);
+        $definition->replaceArgument(6, $config['form_types']['reset_password']);
+
+        $definition = $container->getDefinition(SecurityController::class);
+        $definition->replaceArgument(0, $config['form_types']['login']);
     }
 }

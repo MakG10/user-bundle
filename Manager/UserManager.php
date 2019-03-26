@@ -42,6 +42,12 @@ class UserManager implements UserManagerInterface
         return $this->entityManager->getRepository($this->userClass)->findOneBy($criteria);
     }
 
+    public function getUserClass(): ?string
+    {
+        return $this->userClass;
+    }
+
+
     private function updatePassword(UserInterface $user)
     {
         $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());

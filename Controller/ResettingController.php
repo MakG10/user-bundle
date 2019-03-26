@@ -26,7 +26,9 @@ class ResettingController extends AbstractController
         EventDispatcherInterface $eventDispatcher,
         TranslatorInterface $translator,
         int $requestInterval,
-        int $tokenTtl
+        int $tokenTtl,
+        string $resettingRequestFormType,
+        string $resetPasswordFormType
     )
     {
         $this->userManager = $userManager;
