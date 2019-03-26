@@ -1,9 +1,21 @@
-{% block subject %}{{ 'You have requested a new password' | trans }}{% endblock %}
+{% trans_default_domain 'MgUser' %}
+
+{% set subject = 'You have requested a new password' | trans %}
+
+{% block subject %}{{ subject }}{% endblock %}
 
 {% block body_text %}
     {# TODO #}
 {% endblock %}
 
 {% block body_html %}
-    {# TODO #}
+    {% embed 'emailBase.html.twig' %}
+        {% block subject %}
+            {{ subject }}
+        {% endblock %}
+
+        {% block body %}
+            {# TODO #}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

@@ -1,9 +1,21 @@
-{% block subject %}{{ 'Confirm your registration' | trans }}{% endblock %}
+{% trans_default_domain 'MgUser' %}
+
+{% set subject = 'Confirm your registration' | trans %}
+
+{% block subject %}{{ subject }}{% endblock %}
 
 {% block body_text %}
     {# TODO #}
 {% endblock %}
 
 {% block body_html %}
-    {# TODO #}
+    {% embed 'emailBase.html.twig' %}
+        {% block subject %}
+            {{ subject }}
+        {% endblock %}
+
+        {% block body %}
+            {# TODO #}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
