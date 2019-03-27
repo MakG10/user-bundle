@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\User;
+namespace MakG\UserBundle\Form;
 
 
 use Symfony\Component\Form\AbstractType;
