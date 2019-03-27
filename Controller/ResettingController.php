@@ -4,8 +4,6 @@ namespace MakG\UserBundle\Controller;
 
 
 use MakG\UserBundle\Event\UserEvent;
-use MakG\UserBundle\Form\ResetPasswordForm;
-use MakG\UserBundle\Form\ResettingRequestForm;
 use MakG\UserBundle\Manager\UserManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -20,6 +18,14 @@ class ResettingController extends AbstractController
     private $translator;
     private $requestInterval;
     private $tokenTtl;
+    /**
+     * @var string
+     */
+    private $resettingRequestFormType;
+    /**
+     * @var string
+     */
+    private $resetPasswordFormType;
 
     public function __construct(
         UserManagerInterface $userManager,
@@ -36,13 +42,15 @@ class ResettingController extends AbstractController
         $this->translator = $translator;
         $this->requestInterval = $requestInterval;
         $this->tokenTtl = $tokenTtl;
+        $this->resettingRequestFormType = $resettingRequestFormType;
+        $this->resetPasswordFormType = $resetPasswordFormType;
     }
 
     /**
      * @Route("/request-new-password", name="mg_user_resetting_request")
      */
     public function request(Request $request) {
-        $form = $this->createForm(ResettingRequestForm::class);
+        $form = $this->createForm($this->resettingRequestFormType);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -92,7 +100,7 @@ class ResettingController extends AbstractController
         }
 
 
-        $form = $this->createForm(ResetPasswordForm::class, $user);
+        $form = $this->createForm($this->resetPasswordFormType, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -103,13 +111,9 @@ class ResettingController extends AbstractController
             $event = new UserEvent($user);
             $this->eventDispatcher->dispatch(UserEvent::PASSWORD_RESET_COMPLETED, $event); // TODO subscriber
 
-            $this->userManager->updateUser($user);
-
             if (null !== $response = $event->getResponse()) {
                 return $response;
             }
-
-            // TODO autologin?
 
             return $this->redirectToRoute('index'); // TODO
         }

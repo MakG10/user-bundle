@@ -35,11 +35,18 @@ services:
             - '@security.password_encoder'
 
     makg_user.mailer:
-        class: MakG\UserBundle\Mailer\Mailer
+        class: MakG\UserBundle\Mailer\TwigSwiftMailer
         arguments:
             - '@mailer'
             - '@twig'
 
+    makg_user.login_manager:
+        class: MakG\UserBundle\Security\LoginManager
+        arguments:
+            - '@security.token_storage'
+            - ~
+
+    # Event Subscribers
     makg_user.listener.generate_confirmation_token:
         class: MakG\UserBundle\EventListener\GenerateConfirmationToken
         arguments:
@@ -48,7 +55,7 @@ services:
     makg_user.listener.send_emails:
         class: MakG\UserBundle\EventListener\SendEmails
         arguments:
-            - '@makg_user.mailer'
+            - '@MakG\UserBundle\Mailer\MailerInterface'
             - '@logger'
 
     # Aliases

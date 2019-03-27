@@ -5,7 +5,6 @@ namespace MakG\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\MappedSuperclass
@@ -76,7 +75,7 @@ class User implements UserInterface
 
 	public function setEmail(string $email): self
     {
-        $this->email = $email;
+        $this->email = mb_strtolower($email);
 
         return $this;
     }

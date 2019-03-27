@@ -4,10 +4,9 @@ namespace MakG\UserBundle\Mailer;
 
 
 use MakG\UserBundle\Entity\UserInterface;
-use MakG\UserBundle\Mailer\MailerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Mailer implements MailerInterface
+class TwigSwiftMailer implements MailerInterface
 {
     private $mailer;
     private $twig;

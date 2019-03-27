@@ -11,6 +11,7 @@ class UserEvent extends Event
 {
     public const REGISTRATION_SUCCESS = 'mg_user.registration_success';
     public const REGISTRATION_COMPLETED = 'mg_user.registration_completed';
+    public const REGISTRATION_CONFIRMED = 'mg_user.registration_confirmed';
     public const PASSWORD_RESET_REQUESTED = 'mg_user.password_reset_requested';
     public const PASSWORD_RESET_COMPLETED = 'mg_user.password_reset_completed';
 

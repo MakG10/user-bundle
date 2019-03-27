@@ -82,6 +82,9 @@ class RegistrationController extends AbstractController
 
         $this->userManager->updateUser($user);
 
+        $event = new UserEvent($user);
+        $this->eventDispatcher->dispatch(UserEvent::REGISTRATION_CONFIRMED, $event);
+
         return $this->render('@User/registration/confirm_success.html.twig');
     }
 }

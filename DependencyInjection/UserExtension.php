@@ -24,6 +24,9 @@ class UserExtension extends Extension
         $definition = $container->getDefinition('makg_user.user_manager');
         $definition->replaceArgument(0, $config['user_class']);
 
+        $definition = $container->getDefinition('makg_user.login_manager');
+        $definition->replaceArgument(1, $config['firewall_name']);
+
         $definition = $container->getDefinition(RegistrationController::class);
         $definition->replaceArgument(2, $config['form_types']['registration']);
 
