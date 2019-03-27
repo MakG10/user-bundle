@@ -3,7 +3,7 @@
 namespace MakG\UserBundle\DependencyInjection;
 
 
-use App\Form\User\LoginForm;
+use MakG\UserBundle\Form\LoginForm;
 use MakG\UserBundle\Form\RegistrationForm;
 use MakG\UserBundle\Form\ResetPasswordForm;
 use MakG\UserBundle\Form\ResettingRequestForm;
@@ -22,7 +22,8 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
             ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
-            ->scalarNode('firewall_name')->isRequired()->defaultValue('main')->end()
+            ->scalarNode('firewall_name')->cannotBeEmpty()->defaultValue('main')->end()
+            ->scalarNode('email_sender')->defaultNull()->end()
             ->arrayNode('form_types')
             ->addDefaultsIfNotSet()
             ->children()

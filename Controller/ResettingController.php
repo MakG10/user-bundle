@@ -65,6 +65,8 @@ class ResettingController extends AbstractController
             $canRequestAgain = $user && $user->hasPasswordRequestExpired($this->requestInterval); // TODO
 
             if ($canRequestAgain) {
+                $user->setPasswordRequestedAt(new \DateTime());
+
                 $event = new UserEvent($user);
                 $this->eventDispatcher->dispatch(UserEvent::PASSWORD_RESET_REQUESTED, $event); // TODO subscriber
 
@@ -75,7 +77,7 @@ class ResettingController extends AbstractController
                 }
             }
 
-            return $this->redirectToRoute('index'); // TODO
+            return $this->redirectToRoute('mg_user_resetting_check_email');
         }
 
         return $this->render('@User/resetting/request.html.twig', [
@@ -84,19 +86,27 @@ class ResettingController extends AbstractController
     }
 
     /**
+     * @Route("/check-email", name="mg_user_resetting_check_email")
+     */
+    public function checkEmail()
+    {
+        return $this->render('@User/resetting/check_email.html.twig');
+    }
+
+    /**
      * @Route("/reset-password/{token}", name="mg_user_resetting_reset")
      */
     public function reset(string $token, Request $request)
     {
         $user = $this->userManager->findUserBy([
-            'token' => $token,
-            'enabled' => true,
+            'confirmationToken' => $token,
+            'enabled'           => true,
         ]);
 
         if (!$user || $user->hasPasswordRequestExpired($this->tokenTtl)) { // TODO
             $this->addFlash('error', $this->translator->trans('Invalid token.'));
 
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('mg_user_security_login');
         }
 
 

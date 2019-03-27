@@ -25,8 +25,9 @@ class LoginForm extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults([
-			'data_class' => null,
-			'csrf_token_id' => 'authenticate',
+            'data_class'      => null,
+            'csrf_token_id'   => 'authenticate',
+            'csrf_field_name' => '_csrf_token',
 		]);
 	}
 

@@ -76,6 +76,6 @@ class SendEmails implements EventSubscriberInterface
         }
 
 
-        $this->sendResettingEmail($user);
+        $this->mailer->sendResettingEmail($user);
     }
 }

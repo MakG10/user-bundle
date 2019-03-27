@@ -10,11 +10,13 @@ class TwigSwiftMailer implements MailerInterface
 {
     private $mailer;
     private $twig;
+    private $sender;
 
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig)
+    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, ?string $sender)
     {
         $this->mailer = $mailer;
-        $this->twig = $twig;
+        $this->twig   = $twig;
+        $this->sender = $sender;
     }
 
     public function send(\Swift_Message $message)
@@ -82,5 +84,20 @@ class TwigSwiftMailer implements MailerInterface
             ->addPart($bodyHtml, 'text/html');
 
         return $message;
+    }
+
+    private function getSenderData()
+    {
+        preg_match('/(.*)(<.*>)?/', $this->sender, $matches);
+
+        $senderName = $matches[1];
+        $email      = trim($matches[2], " \t<>");
+
+        if (empty($email)) {
+            $email      = $matches[1];
+            $senderName = null;
+        }
+
+        return [$email, $senderName];
     }
 }

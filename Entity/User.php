@@ -194,11 +194,17 @@ class User implements UserInterface
 
     public function isEnabled(): bool
     {
-        // TODO: Implement isEnabled() method.
+        return $this->enabled;
     }
 
     public function hasPasswordRequestExpired(int $ttl): bool
     {
-        // TODO: Implement hasPasswordRequestExpired() method.
+        if (null === $this->getPasswordRequestedAt()) {
+            return true;
+        }
+
+        $now = new \DateTime();
+
+        return ($now->getTimestamp() - $this->getPasswordRequestedAt()->getTimestamp()) > $ttl;
     }
 }

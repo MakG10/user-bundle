@@ -49,8 +49,15 @@ class RegistrationController extends AbstractController
                 return $response;
             }
 
-            return $this->redirectToRoute('index');
-		}
+            return $this->redirectToRoute('mg_user_registration_activation_required');
+        } elseif ( ! $form->isValid()) {
+            $event = new UserEvent($user);
+            $this->eventDispatcher->dispatch(UserEvent::REGISTRATION_FAILURE, $event);
+
+            if (null !== $response = $event->getResponse()) {
+                return $response;
+            }
+        }
 
 		return $this->render('@User/registration/form.html.twig', [
 			'form' => $form->createView(),
@@ -70,7 +77,7 @@ class RegistrationController extends AbstractController
      */
 	public function confirm(string $token)
     {
-        $user = $this->userManager->findUserBy(['confirmationToken' => $token]);
+        $user = $this->userManager->findUserBy(['confirmationToken' => $token, 'enabled' => false]);
 
         if (null === $user) {
             return $this->render('@User/registration/confirm_error.html.twig');

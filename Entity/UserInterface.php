@@ -11,6 +11,8 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     public function setEnabled(bool $enabled);
     public function getConfirmationToken(): ?string;
     public function setConfirmationToken(?string $token);
+
+    public function setPasswordRequestedAt(?\DateTimeInterface $passwordRequestedAt);
     public function hasPasswordRequestExpired(int $ttl): bool;
     public function setPassword(string $password);
 

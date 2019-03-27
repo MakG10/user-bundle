@@ -1,3 +1,7 @@
 {% trans_default_domain 'MgUser' %}
 
+{% if error %}
+    {{ error.messageKey|trans(error.messageData, 'security') }}
+{% endif %}
+
 {{ form(form) }}
