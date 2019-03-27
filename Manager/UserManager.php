@@ -34,6 +34,7 @@ class UserManager implements UserManagerInterface
             $this->updatePassword($user);
         }
 
+        $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
 
@@ -50,6 +51,8 @@ class UserManager implements UserManagerInterface
 
     private function updatePassword(UserInterface $user)
     {
-        $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
+        $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
+
+        $user->setPassword($encodedPassword);
     }
 }

@@ -4,18 +4,27 @@ services:
         class: MakG\UserBundle\Controller\RegistrationController
         public: true
         arguments:
-            - '@MakG\UserBundle\Manager\UserManager'
+            - '@MakG\UserBundle\Manager\UserManagerInterface'
             - '@event_dispatcher'
+            - ~
 
     MakG\UserBundle\Controller\ResettingController:
         class: MakG\UserBundle\Controller\ResettingController
         public: true
         arguments:
-            - '@MakG\UserBundle\Manager\UserManager'
+            - '@MakG\UserBundle\Manager\UserManagerInterface'
             - '@event_dispatcher'
             - '@translator'
             - 0
             - 0
+            - ~
+            - ~
+
+    MakG\UserBundle\Controller\SecurityController:
+        class: MakG\UserBundle\Controller\SecurityController
+        public: true
+        arguments:
+            - ~
 
     # Services
     makg_user.user_manager:

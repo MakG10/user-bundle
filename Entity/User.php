@@ -8,8 +8,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ORM\MappedSuperclass
  * @UniqueEntity(fields="email", message="Email already taken")
- * @Vich\Uploadable()
  */
 class User implements UserInterface
 {
