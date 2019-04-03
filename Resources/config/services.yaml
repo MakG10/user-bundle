@@ -28,12 +28,21 @@ services:
             - '@security.authentication_utils'
 
     # Services
+    makg_user.avatar_generator.identicon:
+        class: MakG\UserBundle\AvatarGenerator\IdenticonGenerator
+
     makg_user.user_manager:
         class: MakG\UserBundle\Manager\UserManager
         arguments:
             - ~
             - '@doctrine.orm.entity_manager'
             - '@security.password_encoder'
+
+    makg_user.user_manipulator:
+        class: MakG\UserBundle\Manager\UserManipulator
+        arguments:
+            - '@MakG\UserBundle\Manager\UserManagerInterface'
+            - '@MakG\UserBundle\AvatarGenerator\AvatarGeneratorInterface'
 
     makg_user.mailer:
         class: MakG\UserBundle\Mailer\NoopMailer
@@ -67,9 +76,15 @@ services:
         tags: [kernel.event_subscriber]
 
     # Aliases
+    MakG\UserBundle\AvatarGenerator\AvatarGeneratorInterface:
+        alias: 'makg_user.avatar_generator.identicon'
+
     MakG\UserBundle\Mailer\MailerInterface:
         alias: 'makg_user.mailer'
 
     MakG\UserBundle\Manager\UserManagerInterface:
         alias: 'makg_user.user_manager'
+
+    MakG\UserBundle\Manager\UserManipulatorInterface:
+        alias: 'makg_user.user_manipulator'
     

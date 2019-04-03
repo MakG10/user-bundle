@@ -3,6 +3,9 @@
 namespace MakG\UserBundle\Entity;
 
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+
 trait AvatarTrait
 {
     /**
@@ -18,12 +21,12 @@ trait AvatarTrait
      */
     private $avatar;
 
-    public function getAvatarFile(): ?\Symfony\Component\HttpFoundation\File\File
+    public function getAvatarFile()
     {
         return $this->avatarFile;
     }
 
-    public function setAvatarFile(?\Symfony\Component\HttpFoundation\File\File $avatarFile)
+    public function setAvatarFile($avatarFile)
     {
         $this->avatarFile = $avatarFile;
 

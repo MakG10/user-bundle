@@ -4,6 +4,9 @@ namespace MakG\UserBundle\Manager;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Events;
+use MakG\UserBundle\Entity\AvatarInterface;
 use MakG\UserBundle\Entity\UserInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -34,6 +37,12 @@ class UserManager implements UserManagerInterface
             $this->updatePassword($user);
         }
 
+        // Workaround for VichUploader to persist avatar even if there are no other changes to persist in the entity
+        if ($user instanceof AvatarInterface && null !== $user->getAvatarFile() && empty($this->getChangeSet($user))) {
+            $event = new LifecycleEventArgs($user, $this->entityManager);
+            $this->entityManager->getEventManager()->dispatchEvent(Events::preUpdate, $event);
+        }
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
     }
@@ -54,5 +63,10 @@ class UserManager implements UserManagerInterface
         $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
 
         $user->setPassword($encodedPassword);
+    }
+
+    private function getChangeSet(UserInterface $user): array
+    {
+        return $this->entityManager->getUnitOfWork()->getEntityChangeSet($user);
     }
 }
