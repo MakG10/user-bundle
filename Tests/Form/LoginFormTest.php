@@ -26,14 +26,4 @@ class LoginFormTest extends FormIntegrationTestCase
 
         $this->assertSame($data, $form->getData());
     }
-
-    public function testGetBlockPrefix()
-    {
-
-    }
-
-    public function testConfigureOptions()
-    {
-
-    }
 }

@@ -24,7 +24,7 @@
         "psr-4": { "MakG\\UserBundle\\": "" }
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.5"
+      "phpunit/phpunit": "^8.0"
     },
   "suggest": {
     "yzalis/identicon": "^1.2"

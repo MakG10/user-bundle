@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: maciej
- * Date: 27.03.19
- * Time: 15:15
- */
 
 namespace MakG\UserBundle\Tests\EventListener;
 

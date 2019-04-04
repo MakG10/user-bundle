@@ -8,12 +8,16 @@
 
 namespace MakG\UserBundle\Tests\Manager;
 
+use Doctrine\Common\EventManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\UnitOfWork;
 use MakG\UserBundle\Entity\User;
 use MakG\UserBundle\Manager\UserManager;
+use MakG\UserBundle\Tests\TestUser;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserManagerTest extends TestCase
@@ -70,6 +74,38 @@ class UserManagerTest extends TestCase
         $this->userManager->updateUser($user);
 
         $this->assertSame('encoded password', $user->getPassword());
+    }
+
+    public function testUpdateUserAvatar()
+    {
+        $file = new File(__FILE__);
+
+        $user = new TestUser();
+        $user->setAvatarFile($file);
+
+        $eventManager = $this->createMock(EventManager::class);
+        $eventManager
+            ->expects($this->once())
+            ->method('dispatchEvent');
+
+        $unitOfWork = $this->createMock(UnitOfWork::class);
+        $unitOfWork
+            ->method('getEntityChangeSet')
+            ->willReturn([]);
+
+        $this->entityManager
+            ->expects($this->once())
+            ->method('flush');
+
+        $this->entityManager
+            ->method('getUnitOfWork')
+            ->willReturn($unitOfWork);
+
+        $this->entityManager
+            ->method('getEventManager')
+            ->willReturn($eventManager);
+
+        $this->userManager->updateUser($user);
     }
 
     public function testCreateUser()
