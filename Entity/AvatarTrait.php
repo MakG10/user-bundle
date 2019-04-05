@@ -14,12 +14,12 @@ trait AvatarTrait
      * @Vich\UploadableField(mapping="user_avatars", fileNameProperty="avatar")
      * @Assert\Image(maxSize="100k", mimeTypes={"image/jpeg", "image/jpg", "image/png", "image/gif"})
      */
-    private $avatarFile;
+    protected $avatarFile;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $avatar;
+    protected $avatar;
 
     public function getAvatarFile()
     {

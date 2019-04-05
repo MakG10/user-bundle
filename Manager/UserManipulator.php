@@ -13,11 +13,17 @@ class UserManipulator implements UserManipulatorInterface
 {
     private $userManager;
     private $avatarGenerator;
+    private $filesystem;
 
-    public function __construct(UserManagerInterface $userManager, AvatarGeneratorInterface $avatarGenerator)
+    public function __construct(
+        UserManagerInterface $userManager,
+        AvatarGeneratorInterface $avatarGenerator,
+        Filesystem $filesystem
+    )
     {
         $this->userManager = $userManager;
         $this->avatarGenerator = $avatarGenerator;
+        $this->filesystem = $filesystem;
     }
 
     public function randomizeAvatar(UserInterface $user)
@@ -37,10 +43,9 @@ class UserManipulator implements UserManipulatorInterface
 
     private function saveTemporaryFile($content): string
     {
-        $filesystem = new Filesystem();
-        $filePath = $filesystem->tempnam(\sys_get_temp_dir(), 'avatar');
+        $filePath = $this->filesystem->tempnam(\sys_get_temp_dir(), 'avatar');
 
-        \file_put_contents($filePath, $content);
+        $this->filesystem->dumpFile($filePath, $content);
 
         return $filePath;
     }

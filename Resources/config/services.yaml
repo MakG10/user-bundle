@@ -43,6 +43,7 @@ services:
         arguments:
             - '@MakG\UserBundle\Manager\UserManagerInterface'
             - '@MakG\UserBundle\AvatarGenerator\AvatarGeneratorInterface'
+            - '@filesystem'
 
     makg_user.mailer:
         class: MakG\UserBundle\Mailer\NoopMailer
