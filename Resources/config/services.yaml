@@ -45,17 +45,25 @@ services:
             - '@MakG\UserBundle\AvatarGenerator\AvatarGeneratorInterface'
             - '@filesystem'
 
-    makg_user.mailer:
+    makg_user.noop_mailer:
         class: MakG\UserBundle\Mailer\NoopMailer
+
+    makg_user.twig_swift_mailer:
+        class: MakG\UserBundle\Mailer\TwigSwiftMailer
         arguments:
             - '@mailer'
             - '@twig'
+            - ~
+            - '@router'
 
     makg_user.login_manager:
         class: MakG\UserBundle\Security\LoginManager
         arguments:
             - '@security.token_storage'
             - ~
+
+    makg_user.user_checker:
+        class: MakG\UserBundle\Security\UserChecker
 
     makg_user.user_provider:
         class: MakG\UserBundle\Security\UserProvider
@@ -88,4 +96,7 @@ services:
 
     MakG\UserBundle\Manager\UserManipulatorInterface:
         alias: 'makg_user.user_manipulator'
+
+    MakG\UserBundle\Security\UserChecker:
+        alias: 'makg_user.user_checker'
     

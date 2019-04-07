@@ -1,0 +1,15 @@
+registration.email.subject: Confirm your registration
+registration.email.message: |
+    You can verify your linux-look.org account by clicking the button below:
+
+    %confirmation_url%
+registration.email.button: Confirm your registration
+
+resetting.email.subject: You have requested a new password
+resetting.email.message: |
+    You can change password to your account using the link below:
+
+    %confirmation_url%
+
+    If you didn't request to change a password, you can simply ignore this message.
+resetting.email.button: Change the password

@@ -1,0 +1,8 @@
+mg_user_login:
+    resource: '@UserBundle/Resources/config/routing/login.yaml'
+
+mg_user_registration:
+    resource: '@UserBundle/Resources/config/routing/registration.yaml'
+
+mg_user_resetting:
+    resource: '@UserBundle/Resources/config/routing/resetting.yaml'

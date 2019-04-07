@@ -7,5 +7,8 @@ use MakG\UserBundle\Entity\UserInterface;
 
 interface LoginManagerInterface
 {
-    public function authenticateUser(UserInterface $user);
+    /**
+     * Authenticates given user.
+     */
+    public function authenticateUser(UserInterface $user): void;
 }

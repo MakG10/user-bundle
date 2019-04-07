@@ -50,7 +50,9 @@ class RegistrationController extends AbstractController
             }
 
             return $this->redirectToRoute('mg_user_registration_activation_required');
-        } elseif ( ! $form->isValid()) {
+        }
+
+        if ($form->isSubmitted() && ! $form->isValid()) {
             $event = new UserEvent($user);
             $this->eventDispatcher->dispatch(UserEvent::REGISTRATION_FAILURE, $event);
 

@@ -5,18 +5,26 @@ namespace MakG\UserBundle\Mailer;
 
 use MakG\UserBundle\Entity\UserInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 
 class TwigSwiftMailer implements MailerInterface
 {
     private $mailer;
     private $twig;
     private $sender;
+    private $router;
 
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig, ?string $sender)
+    public function __construct(
+        \Swift_Mailer $mailer,
+        \Twig_Environment $twig,
+        ?string $sender,
+        RouterInterface $router
+    )
     {
         $this->mailer = $mailer;
         $this->twig   = $twig;
         $this->sender = $sender;
+        $this->router = $router;
     }
 
     public function send(\Swift_Message $message)
@@ -27,11 +35,15 @@ class TwigSwiftMailer implements MailerInterface
     public function sendConfirmationEmail(UserInterface $user)
     {
         $this->sendEmail([
-            'recipient' => $user->getEmail(),
-            'template' => '@User/emails/resetting.html.twig',
+            'recipient'       => $user->getEmail(),
+            'template'        => '@User/emails/confirmation.html.twig',
             'template_params' => [
-                'user' => $user,
+                'user'              => $user,
                 'confirmationToken' => $user->getConfirmationToken(),
+                'confirmationUrl'   => $this->router->generate(
+                    'mg_user_registration_confirm',
+                    ['token' => $user->getConfirmationToken()]
+                ),
             ],
         ]);
     }
@@ -39,16 +51,20 @@ class TwigSwiftMailer implements MailerInterface
     public function sendResettingEmail(UserInterface $user)
     {
         $this->sendEmail([
-            'recipient' => $user->getEmail(),
-            'template' => '@User/emails/confirmation.html.twig',
+            'recipient'       => $user->getEmail(),
+            'template'        => '@User/emails/resetting.html.twig',
             'template_params' => [
-                'user' => $user,
+                'user'              => $user,
                 'confirmationToken' => $user->getConfirmationToken(),
+                'confirmationUrl'   => $this->router->generate(
+                    'mg_user_resetting_reset',
+                    ['token' => $user->getConfirmationToken()]
+                ),
             ],
         ]);
     }
 
-    protected function sendEmail(array $options = []): \Swift_Message
+    protected function sendEmail(array $options = []): void
     {
         $resolver = new OptionsResolver();
         $resolver->setDefaults(
@@ -83,7 +99,7 @@ class TwigSwiftMailer implements MailerInterface
             ->setBody($bodyText, 'text/plain')
             ->addPart($bodyHtml, 'text/html');
 
-        return $message;
+        $this->mailer->send($message);
     }
 
     private function getSenderData()

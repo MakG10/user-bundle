@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            background-color: #6bb4e8;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .box {
+            padding: 1rem;
+
+            background-color: #FFFFFFEE;
+            box-shadow: 0 0 16px #444;
+        }
+
+        input, button {
+            margin: 0 0 0.5rem;
+            padding: 0.5rem;
+
+            background-color: #EEE;
+            border: 1px solid #CCC;
+            border-radius: 3px;
+        }
+
+        button {
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="box">
+        {% block body %}
+        {% endblock %}
+    </div>
+</div>
+</body>
+
+</html>

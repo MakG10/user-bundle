@@ -38,5 +38,8 @@ class UserExtension extends Extension
 
         $definition = $container->getDefinition(SecurityController::class);
         $definition->replaceArgument(0, $config['form_types']['login']);
+
+        $definition = $container->getDefinition('makg_user.twig_swift_mailer');
+        $definition->replaceArgument(2, $config['email_sender']);
     }
 }

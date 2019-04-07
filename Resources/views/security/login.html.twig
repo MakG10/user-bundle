@@ -1,7 +1,11 @@
+{% extends "@User/base.html.twig" %}
+
 {% trans_default_domain 'MgUser' %}
 
-{% if error %}
-    {{ error.messageKey|trans(error.messageData, 'security') }}
-{% endif %}
+{% block body %}
+    {% if error %}
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+    {% endif %}
 
-{{ form(form) }}
+    {{ form(form) }}
+{% endblock %}

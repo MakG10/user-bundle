@@ -1,21 +1,23 @@
 {% trans_default_domain 'MgUser' %}
 
-{% set subject = 'You have requested a new password' | trans %}
+{% set subject = 'resetting.email.subject' | trans %}
 
-{% block subject %}{{ subject }}{% endblock %}
+{% block subject %}{{ subject | default('resetting.email.subject' | trans) }}{% endblock %}
 
 {% block body_text %}
     {# TODO #}
 {% endblock %}
 
 {% block body_html %}
-    {% embed 'emailBase.html.twig' %}
+    {% embed '@User/emails/base.html.twig' %}
         {% block subject %}
-            {{ subject }}
+            {{ subject | default('You have requested a new password' | trans) }}
         {% endblock %}
 
         {% block body %}
-            {# TODO #}
+            {% set button = email_helper.button('resetting.email.button' | trans, confirmationUrl) %}
+
+            {{ 'resetting.email.message' | trans({'%confirmation_url%': button}) | raw }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: maciej
- * Date: 26.03.19
- * Time: 15:41
- */
 
 namespace MakG\UserBundle\Security;
 

@@ -21,10 +21,13 @@
       "symfony/translation": "^4.2"
     },
     "autoload": {
-        "psr-4": { "MakG\\UserBundle\\": "" }
+      "psr-4": {
+        "MakG\\UserBundle\\": ""
+      }
     },
     "require-dev": {
-      "phpunit/phpunit": "^8.0"
+      "phpunit/phpunit": "^8.0",
+      "yzalis/identicon": "^1.2"
     },
   "suggest": {
     "yzalis/identicon": "^1.2"

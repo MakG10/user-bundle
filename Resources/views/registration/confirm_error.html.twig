@@ -1,3 +1,7 @@
+{% extends "@User/base.html.twig" %}
+
 {% trans_default_domain 'MgUser' %}
 
-{{ 'Invalid token. Please make sure you entered a correct URL.' | trans }}
+{% block body %}
+    {{ 'Invalid token. Please make sure you entered a correct URL.' | trans }}
+{% endblock %}

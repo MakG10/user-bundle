@@ -1,3 +1,8 @@
+{% extends "@User/base.html.twig" %}
+
 {% trans_default_domain 'MgUser' %}
 
-{{ 'Registration is complete. Check your inbox for an e-mail with activation link.' | trans }}
+{% block body %}
+    {{ 'Registration is complete. Check your inbox for an e-mail with activation link.' | trans }}
+{% endblock %}
+

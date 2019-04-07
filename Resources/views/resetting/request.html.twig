@@ -1,3 +1,7 @@
+{% extends "@User/base.html.twig" %}
+
 {% trans_default_domain 'MgUser' %}
 
-{{ form(form) }}
+{% block body %}
+    {{ form(form) }}
+{% endblock %}

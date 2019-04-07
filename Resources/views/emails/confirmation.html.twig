@@ -1,21 +1,24 @@
-{% trans_default_domain 'MgUser' %}
+{% trans_default_domain 'MakGUserBundle' %}
 
-{% set subject = 'Confirm your registration' | trans %}
-
-{% block subject %}{{ subject }}{% endblock %}
+{% block subject %}{{ subject | default('registration.email.subject' | trans) }}{% endblock %}
 
 {% block body_text %}
-    {# TODO #}
+    {{ 'registration.email.message' | trans({'%confirmation_url%': confirmationUrl}) }}
 {% endblock %}
 
 {% block body_html %}
-    {% embed 'emailBase.html.twig' %}
+    {% embed '@User/emails/base.html.twig' %}
+        {% trans_default_domain 'MakGUserBundle' %}
+        {% import '@User/emails/base.html.twig' as email_helper %}
+
         {% block subject %}
-            {{ subject }}
+            {{ subject | default('registration.email.subject' | trans) }}
         {% endblock %}
 
         {% block body %}
-            {# TODO #}
+            {% set button = email_helper.button('registration.email.button' | trans, confirmationUrl) %}
+
+            {{ 'registration.email.message' | trans({'%confirmation_url%': button}) | raw }}
         {% endblock %}
     {% endembed %}
 {% endblock %}

@@ -1,3 +1,7 @@
+{% extends "@User/base.html.twig" %}
+
 {% trans_default_domain 'MgUser' %}
 
-{{ 'resetting.check_email' | trans | nl2br }}
+{% block body %}
+    {{ 'resetting.check_email' | trans | nl2br }}
+{% endblock %}

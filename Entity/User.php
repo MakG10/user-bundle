@@ -17,53 +17,53 @@ class User implements UserInterface
 	 * @ORM\GeneratedValue()
 	 * @ORM\Column(type="integer")
 	 */
-	private $id;
+    protected $id;
 
 	/**
 	 * @ORM\Column(type="string", length=255)
 	 */
-	private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private $displayName;
+    protected $displayName;
 
 	/**
 	 * @ORM\Column(type="string", length=255)
 	 */
-	private $password;
+    protected $password;
 
 	/**
 	 * @ORM\Column(type="array")
 	 */
-	private $roles = [];
+    protected $roles = [];
 
     /**
      * @ORM\Column(type="boolean", options={"default": false})
      */
-    private $enabled = false;
+    protected $enabled = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $confirmationToken;
+    protected $confirmationToken;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $passwordRequestedAt;
+    protected $passwordRequestedAt;
 
 	/**
 	 * Virtual property
 	 */
-	private $plainPassword;
+    protected $plainPassword;
 
 	public function __construct()
     {
     }
 
-	public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
@@ -73,7 +73,7 @@ class User implements UserInterface
         return $this->email;
     }
 
-	public function setEmail(string $email): self
+    public function setEmail(string $email)
     {
         $this->email = mb_strtolower($email);
 
@@ -85,7 +85,7 @@ class User implements UserInterface
         return $this->displayName;
     }
 
-	public function setDisplayName(?string $displayName): self
+    public function setDisplayName(?string $displayName)
     {
         $this->displayName = $displayName;
 
@@ -97,7 +97,7 @@ class User implements UserInterface
         return $this->password;
     }
 
-	public function setPassword(string $password): self
+    public function setPassword(string $password)
     {
         $this->password = $password;
 
@@ -113,7 +113,7 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
-	public function setRoles(array $roles): self
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
 
@@ -125,7 +125,7 @@ class User implements UserInterface
         return $this->enabled;
     }
 
-    public function setEnabled(bool $enabled): self
+    public function setEnabled(bool $enabled)
     {
         $this->enabled = $enabled;
 
@@ -137,7 +137,7 @@ class User implements UserInterface
         return $this->confirmationToken;
     }
 
-    public function setConfirmationToken(?string $confirmationToken): self
+    public function setConfirmationToken(?string $confirmationToken)
     {
         $this->confirmationToken = $confirmationToken;
 
@@ -149,7 +149,7 @@ class User implements UserInterface
         return $this->passwordRequestedAt;
     }
 
-    public function setPasswordRequestedAt(?\DateTimeInterface $passwordRequestedAt): self
+    public function setPasswordRequestedAt(?\DateTimeInterface $passwordRequestedAt)
     {
         $this->passwordRequestedAt = $passwordRequestedAt;
 

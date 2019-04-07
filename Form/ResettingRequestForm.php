@@ -26,6 +26,10 @@ class ResettingRequestForm extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults(
+            [
+                'translation_domain' => 'MakGUserBundle',
+            ]
+        );
     }
 }

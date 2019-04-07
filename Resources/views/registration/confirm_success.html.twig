@@ -1,3 +1,7 @@
+{% extends "@User/base.html.twig" %}
+
 {% trans_default_domain 'MgUser' %}
 
-{{ 'Your account is now active.' | trans }}
+{% block body %}
+    {{ 'Your account is now active.' | trans }}
+{% endblock %}

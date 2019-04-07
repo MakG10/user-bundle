@@ -41,7 +41,7 @@ class SendEmails implements EventSubscriberInterface
         }
 
         if (null === $user->getConfirmationToken()) {
-            $this->logger->error(
+            $this->logger->debug(
                 'User is not enabled and confirmation token is empty - impossible to send a confirmation e-mail.',
                 ['user' => $user->getId()]
             );
@@ -58,7 +58,7 @@ class SendEmails implements EventSubscriberInterface
         $user = $event->getUser();
 
         if (!$user->isEnabled()) {
-            $this->logger->error(
+            $this->logger->debug(
                 'User is not enabled - refusing to send a resetting e-mail.',
                 ['user' => $user->getId()]
             );
@@ -67,7 +67,7 @@ class SendEmails implements EventSubscriberInterface
         }
 
         if (null === $user->getConfirmationToken()) {
-            $this->logger->error(
+            $this->logger->debug(
                 'Confirmation token is empty - refusing to send a resetting e-mail.',
                 ['user' => $user->getId()]
             );
