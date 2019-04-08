@@ -14,7 +14,8 @@ class FlashMessages implements EventSubscriberInterface
     private $translator;
 
     private static $messages = [
-
+        UserEvent::REGISTRATION_CONFIRMED => 'registration.confirm.success',
+        UserEvent::PASSWORD_RESET_COMPLETED => 'registration.confirm.success',
     ];
 
     public function __construct(Session $session, TranslatorInterface $translator)
