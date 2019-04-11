@@ -7,6 +7,8 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
 {
     public function getId();
     public function getEmail(): ?string;
+
+    public function setEmail(?string $email);
     public function isEnabled(): bool;
     public function setEnabled(bool $enabled);
     public function getConfirmationToken(): ?string;
