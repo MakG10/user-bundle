@@ -44,6 +44,7 @@ services:
             - '@MakG\UserBundle\Manager\UserManagerInterface'
             - '@MakG\UserBundle\AvatarGenerator\AvatarGeneratorInterface'
             - '@filesystem'
+            - '@security.csrf.token_generator'
 
     makg_user.noop_mailer:
         class: MakG\UserBundle\Mailer\NoopMailer

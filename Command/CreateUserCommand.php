@@ -54,6 +54,11 @@ class CreateUserCommand extends Command
         $user->setEmail($email);
         $user->setEnabled($enabled);
 
+        // Generate random password which won't be revealed
+        $this->userManipulator->generateRandomPassword($user);
+
         $this->userManager->updateUser($user);
+
+        $output->writeln(sprintf('Created user <comment>%s</comment>', $user->getEmail()));
     }
 }

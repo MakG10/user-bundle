@@ -8,22 +8,26 @@ use MakG\UserBundle\Entity\AvatarInterface;
 use MakG\UserBundle\Entity\UserInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class UserManipulator implements UserManipulatorInterface
 {
     private $userManager;
     private $avatarGenerator;
     private $filesystem;
+    private $tokenGenerator;
 
     public function __construct(
         UserManagerInterface $userManager,
         AvatarGeneratorInterface $avatarGenerator,
-        Filesystem $filesystem
+        Filesystem $filesystem,
+        TokenGeneratorInterface $tokenGenerator
     )
     {
         $this->userManager = $userManager;
         $this->avatarGenerator = $avatarGenerator;
         $this->filesystem = $filesystem;
+        $this->tokenGenerator = $tokenGenerator;
     }
 
     public function randomizeAvatar(UserInterface $user)
@@ -39,6 +43,15 @@ class UserManipulator implements UserManipulatorInterface
         $user->setAvatarFile($uploadedFile);
 
         $this->userManager->updateUser($user);
+    }
+
+    public function generateRandomPassword(UserInterface $user): string
+    {
+        $randomPassword = $this->tokenGenerator->generateToken();
+
+        $user->setPlainPassword($randomPassword);
+
+        return $randomPassword;
     }
 
     private function saveTemporaryFile($content): string
