@@ -84,6 +84,7 @@ class TwigSwiftMailer implements MailerInterface
         $bodyText = $options['content'];
         $bodyHtml = $options['content'];
         $recipient = $options['recipient'];
+        $senderData = $this->getSenderData();
 
         // Override subject and body from provided template
         if ($options['template']) {
@@ -96,6 +97,7 @@ class TwigSwiftMailer implements MailerInterface
 
         $message = (new \Swift_Message($subject))
             ->setTo($recipient)
+            ->setFrom($senderData[0], $senderData[1])
             ->setBody($bodyText, 'text/plain')
             ->addPart($bodyHtml, 'text/html');
 
@@ -104,10 +106,10 @@ class TwigSwiftMailer implements MailerInterface
 
     private function getSenderData()
     {
-        preg_match('/(.*)(<.*>)?/', $this->sender, $matches);
+        preg_match('/([^<]+)\s*(<.*>)?/', $this->sender, $matches);
 
-        $senderName = $matches[1];
-        $email      = trim($matches[2], " \t<>");
+        $senderName = isset($matches[1]) ? trim($matches[1]) : null;
+        $email = isset($matches[2]) ? trim($matches[2], " \t<>") : null;
 
         if (empty($email)) {
             $email      = $matches[1];
