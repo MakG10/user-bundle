@@ -74,7 +74,7 @@ class User implements UserInterface, EquatableInterface
         return $this->email;
     }
 
-    public function setEmail(string $email)
+    public function setEmail(?string $email)
     {
         $this->email = mb_strtolower($email);
 
