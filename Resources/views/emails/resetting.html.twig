@@ -1,11 +1,11 @@
-{% trans_default_domain 'MgUser' %}
+{% trans_default_domain 'MakGUserBundle' %}
 
 {% set subject = 'resetting.email.subject' | trans %}
 
 {% block subject %}{{ subject | default('resetting.email.subject' | trans) }}{% endblock %}
 
 {% block body_text %}
-    {# TODO #}
+    {{ 'resetting.email.message' | trans({'%confirmation_url%': confirmationUrl}) }}
 {% endblock %}
 
 {% block body_html %}

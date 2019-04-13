@@ -16,22 +16,16 @@ class ResettingController extends AbstractController
     private $userManager;
     private $eventDispatcher;
     private $translator;
-    private $requestInterval;
+    private $retryTtl;
     private $tokenTtl;
-    /**
-     * @var string
-     */
     private $resettingRequestFormType;
-    /**
-     * @var string
-     */
     private $resetPasswordFormType;
 
     public function __construct(
         UserManagerInterface $userManager,
         EventDispatcherInterface $eventDispatcher,
         TranslatorInterface $translator,
-        int $requestInterval,
+        int $retryTtl,
         int $tokenTtl,
         string $resettingRequestFormType,
         string $resetPasswordFormType
@@ -40,7 +34,7 @@ class ResettingController extends AbstractController
         $this->userManager = $userManager;
         $this->eventDispatcher = $eventDispatcher;
         $this->translator = $translator;
-        $this->requestInterval = $requestInterval;
+        $this->retryTtl = $retryTtl;
         $this->tokenTtl = $tokenTtl;
         $this->resettingRequestFormType = $resettingRequestFormType;
         $this->resetPasswordFormType = $resetPasswordFormType;
@@ -62,7 +56,7 @@ class ResettingController extends AbstractController
                 'enabled' => true,
             ]);
 
-            $canRequestAgain = $user && $user->hasPasswordRequestExpired($this->requestInterval); // TODO
+            $canRequestAgain = $user && $user->hasPasswordRequestExpired($this->retryTtl); // TODO
 
             if ($canRequestAgain) {
                 $user->setPasswordRequestedAt(new \DateTime());

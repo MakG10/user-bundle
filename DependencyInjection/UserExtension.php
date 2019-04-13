@@ -31,6 +31,12 @@ class UserExtension extends Extension
         $definition->replaceArgument(2, $config['form_types']['registration']);
 
         $definition = $container->getDefinition(ResettingController::class);
+        $definition->replaceArgument(3, $config['resetting']['retry_ttl']);
+
+        $definition = $container->getDefinition(ResettingController::class);
+        $definition->replaceArgument(4, $config['resetting']['token_ttl']);
+
+        $definition = $container->getDefinition(ResettingController::class);
         $definition->replaceArgument(5, $config['form_types']['resetting_request']);
 
         $definition = $container->getDefinition(ResettingController::class);

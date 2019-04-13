@@ -42,7 +42,8 @@ class TwigSwiftMailer implements MailerInterface
                 'confirmationToken' => $user->getConfirmationToken(),
                 'confirmationUrl'   => $this->router->generate(
                     'mg_user_registration_confirm',
-                    ['token' => $user->getConfirmationToken()]
+                    ['token' => $user->getConfirmationToken()],
+                    RouterInterface::ABSOLUTE_URL
                 ),
             ],
         ]);
@@ -58,7 +59,8 @@ class TwigSwiftMailer implements MailerInterface
                 'confirmationToken' => $user->getConfirmationToken(),
                 'confirmationUrl'   => $this->router->generate(
                     'mg_user_resetting_reset',
-                    ['token' => $user->getConfirmationToken()]
+                    ['token' => $user->getConfirmationToken()],
+                    RouterInterface::ABSOLUTE_URL
                 ),
             ],
         ]);
@@ -112,7 +114,7 @@ class TwigSwiftMailer implements MailerInterface
         $email = isset($matches[2]) ? trim($matches[2], " \t<>") : null;
 
         if (empty($email)) {
-            $email      = $matches[1];
+            $email = $matches[1] ?? null;
             $senderName = null;
         }
 
