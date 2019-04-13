@@ -1,0 +1,16 @@
+registration.email.subject: Potwierdź rejestrację
+registration.email.message: |
+  Możesz potwierdzić rejestrację konta klikając w odnośnik poniżej:
+
+  %confirmation_url%
+registration.email.button: Potwierdź rejestrację
+
+resetting.check_email: Jeżeli konto z takim adresem e-mail istnieje, zostanie wysłana wiadomość z dalszymi instrukcjami.
+resetting.email.subject: Prośba o zmianę hasła
+resetting.email.message: |
+  Możesz zmienić swoje hasło do konta klikając w odnośnik poniżej:
+
+  %confirmation_url%
+
+  Jeżeli to nie ty wysłałeś prośbę o zmianę hasła, to możesz zignorować tę wiadomość
+resetting.email.button: Zmień hasło

@@ -5,6 +5,7 @@ registration.email.message: |
     %confirmation_url%
 registration.email.button: Confirm your registration
 
+resetting.check_email: If an account with given e-mail address exists, expect a message with further instructions.
 resetting.email.subject: You have requested a new password
 resetting.email.message: |
     You can change password to your account using the link below:
