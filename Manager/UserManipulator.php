@@ -30,7 +30,7 @@ class UserManipulator implements UserManipulatorInterface
         $this->tokenGenerator = $tokenGenerator;
     }
 
-    public function randomizeAvatar(UserInterface $user)
+    public function randomizeAvatar(UserInterface $user): void
     {
         if (!$user instanceof AvatarInterface) {
             throw new \InvalidArgumentException(sprintf('User must implement %s interface', AvatarInterface::class));

@@ -90,7 +90,7 @@ services:
         alias: 'makg_user.avatar_generator.identicon'
 
     MakG\UserBundle\Mailer\MailerInterface:
-        alias: 'makg_user.mailer'
+        alias: 'makg_user.twig_swift_mailer'
 
     MakG\UserBundle\Manager\UserManagerInterface:
         alias: 'makg_user.user_manager'

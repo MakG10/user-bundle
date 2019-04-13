@@ -10,6 +10,9 @@
 
 {% block body_html %}
     {% embed '@User/emails/base.html.twig' %}
+        {% trans_default_domain 'MakGUserBundle' %}
+        {% import '@User/emails/base.html.twig' as email_helper %}
+
         {% block subject %}
             {{ subject | default('You have requested a new password' | trans) }}
         {% endblock %}

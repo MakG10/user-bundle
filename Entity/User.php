@@ -5,12 +5,13 @@ namespace MakG\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 
 /**
  * @ORM\MappedSuperclass
  * @UniqueEntity(fields="email", message="Email already taken")
  */
-class User implements UserInterface
+class User implements UserInterface, EquatableInterface
 {
 	/**
 	 * @ORM\Id()
@@ -206,5 +207,14 @@ class User implements UserInterface
         $now = new \DateTime();
 
         return ($now->getTimestamp() - $this->getPasswordRequestedAt()->getTimestamp()) > $ttl;
+    }
+
+    /**
+     * User should be required to re-authenticate when his username/email changes or if his account gets disabled
+     * during active sesion.
+     */
+    public function isEqualTo(\Symfony\Component\Security\Core\User\UserInterface $user): bool
+    {
+        return $user->getUsername() === $this->getUsername() && $this->isEnabled();
     }
 }
