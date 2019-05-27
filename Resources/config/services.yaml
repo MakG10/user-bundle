@@ -85,6 +85,47 @@ services:
             - '@logger'
         tags: [kernel.event_subscriber]
 
+    # Commands
+    makg_user.command.create_user:
+        class: MakG\UserBundle\Command\CreateUserCommand
+        arguments:
+            - '@MakG\UserBundle\Manager\UserManagerInterface'
+            - '@MakG\UserBundle\Manager\UserManipulatorInterface'
+            - '@MakG\UserBundle\Mailer\MailerInterface'
+        tags: [console.command]
+
+    makg_user.command.update_user:
+        class: MakG\UserBundle\Command\UpdateUserCommand
+        arguments:
+            - '@MakG\UserBundle\Manager\UserManagerInterface'
+            - '@MakG\UserBundle\Manager\UserManipulatorInterface'
+            - '@makg_user.user_provider'
+        tags: [console.command]
+
+    makg_user.command.change_password:
+        class: MakG\UserBundle\Command\ChangePasswordCommand
+        arguments:
+            - '@MakG\UserBundle\Manager\UserManagerInterface'
+            - '@MakG\UserBundle\Manager\UserManipulatorInterface'
+            - '@makg_user.user_provider'
+        tags: [console.command]
+
+    makg_user.command.roles:
+        class: MakG\UserBundle\Command\RolesCommand
+        arguments:
+            - '@MakG\UserBundle\Manager\UserManagerInterface'
+            - '@MakG\UserBundle\Manager\UserManipulatorInterface'
+            - '@makg_user.user_provider'
+        tags: [console.command]
+
+    makg_user.command.promote:
+        class: MakG\UserBundle\Command\PromoteCommand
+        tags: [console.command]
+
+    makg_user.command.demote:
+        class: MakG\UserBundle\Command\DemoteCommand
+        tags: [console.command]
+
     # Aliases
     MakG\UserBundle\AvatarGenerator\AvatarGeneratorInterface:
         alias: 'makg_user.avatar_generator.identicon'

@@ -54,6 +54,33 @@ class UserManipulator implements UserManipulatorInterface
         return $randomPassword;
     }
 
+    public function generateRandomToken(UserInterface $user): string
+    {
+        $randomPassword = $this->tokenGenerator->generateToken();
+
+        $user->setConfirmationToken($randomPassword);
+
+        return $randomPassword;
+    }
+
+    public function addRole(UserInterface $user, string $role): void
+    {
+        if ($user->hasRole($role)) {
+            return;
+        }
+
+        $user->addRole($role);
+    }
+
+    public function removeRole(UserInterface $user, string $role): void
+    {
+        if (!$user->hasRole($role)) {
+            return;
+        }
+
+        $user->removeRole($role);
+    }
+
     private function saveTemporaryFile($content): string
     {
         $filePath = $this->filesystem->tempnam(\sys_get_temp_dir(), 'avatar');

@@ -3,6 +3,7 @@
 namespace MakG\UserBundle\Command;
 
 
+use MakG\UserBundle\Mailer\MailerInterface;
 use MakG\UserBundle\Manager\UserManagerInterface;
 use MakG\UserBundle\Manager\UserManipulatorInterface;
 use Symfony\Component\Console\Command\Command;
@@ -15,13 +16,18 @@ class CreateUserCommand extends Command
 {
     private $userManager;
     private $userManipulator;
+    private $mailer;
 
-    public function __construct(UserManagerInterface $userManager, UserManipulatorInterface $userManipulator)
-    {
+    public function __construct(
+        UserManagerInterface $userManager,
+        UserManipulatorInterface $userManipulator,
+        MailerInterface $mailer
+    ) {
         parent::__construct();
 
         $this->userManager = $userManager;
         $this->userManipulator = $userManipulator;
+        $this->mailer = $mailer;
     }
 
     protected function configure()
@@ -39,7 +45,7 @@ class CreateUserCommand extends Command
             )
             ->addOption(
                 'send-resetting-email',
-                'e',
+                'r',
                 InputOption::VALUE_NONE,
                 'Send an e-mail with password reset link'
             );
@@ -57,8 +63,22 @@ class CreateUserCommand extends Command
         // Generate random password which won't be revealed
         $this->userManipulator->generateRandomPassword($user);
 
+        $this->userManipulator->generateRandomToken($user);
         $this->userManager->updateUser($user);
 
         $output->writeln(sprintf('Created user <comment>%s</comment>', $user->getEmail()));
+
+
+        if ($input->getOption('send-confirmation-email')) {
+            $this->mailer->sendConfirmationEmail($user);
+
+            $output->writeln('Sent confirmation e-mail.');
+        }
+
+        if ($input->getOption('send-resetting-email')) {
+            $this->mailer->sendResettingEmail($user);
+
+            $output->writeln('Sent password resetting e-mail.');
+        }
     }
 }

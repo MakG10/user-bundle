@@ -20,6 +20,7 @@ class LoginFormTest extends FormIntegrationTestCase
         $data = [
             '_username' => 'user',
             '_password' => 'password',
+            '_remember_me' => false,
         ];
 
         $form->submit($data);

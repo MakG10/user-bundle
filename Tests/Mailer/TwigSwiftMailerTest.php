@@ -5,6 +5,7 @@ namespace MakG\UserBundle\Tests\Mailer;
 use MakG\UserBundle\Entity\User;
 use MakG\UserBundle\Mailer\TwigSwiftMailer;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
 
 class TwigSwiftMailerTest extends TestCase
@@ -38,7 +39,12 @@ TWIG
             )
         );
 
+        $context = $this->createMock(RequestContext::class);
+
         $router = $this->createMock(RouterInterface::class);
+        $router
+            ->method('getContext')
+            ->willReturn($context);
 
         $user = new User();
         $user->setEmail('user@example.org');

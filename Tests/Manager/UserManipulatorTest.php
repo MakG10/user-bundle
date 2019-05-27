@@ -10,6 +10,7 @@ use MakG\UserBundle\Tests\TestUser;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class UserManipulatorTest extends TestCase
 {
@@ -37,7 +38,9 @@ class UserManipulatorTest extends TestCase
             ->method('dumpFile')
             ->with(__FILE__, 'blob');
 
-        $userManipulator = new UserManipulator($userManager, $avatarGenerator, $filesystem);
+        $tokenGenerator = $this->createMock(TokenGeneratorInterface::class);
+
+        $userManipulator = new UserManipulator($userManager, $avatarGenerator, $filesystem, $tokenGenerator);
 
         $userManipulator->randomizeAvatar($user);
 
@@ -51,8 +54,9 @@ class UserManipulatorTest extends TestCase
         $userManager = $this->createMock(UserManagerInterface::class);
         $avatarGenerator = $this->createMock(AvatarGeneratorInterface::class);
         $filesystem = $this->createMock(Filesystem::class);
+        $tokenGenerator = $this->createMock(TokenGeneratorInterface::class);
 
-        $userManipulator = new UserManipulator($userManager, $avatarGenerator, $filesystem);
+        $userManipulator = new UserManipulator($userManager, $avatarGenerator, $filesystem, $tokenGenerator);
 
         $this->expectException(\InvalidArgumentException::class);
         $userManipulator->randomizeAvatar($user);

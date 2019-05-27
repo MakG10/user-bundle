@@ -7,6 +7,7 @@ use MakG\UserBundle\Entity\UserInterface;
 
 interface MailerInterface
 {
-    public function sendConfirmationEmail(UserInterface $user);
-    public function sendResettingEmail(UserInterface $user);
+    public function sendConfirmationEmail(UserInterface $user): void;
+
+    public function sendResettingEmail(UserInterface $user): void;
 }

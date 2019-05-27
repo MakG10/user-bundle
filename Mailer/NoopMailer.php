@@ -7,11 +7,11 @@ use MakG\UserBundle\Entity\UserInterface;
 
 class NoopMailer implements MailerInterface
 {
-    public function sendConfirmationEmail(UserInterface $user)
+    public function sendConfirmationEmail(UserInterface $user): void
     {
     }
 
-    public function sendResettingEmail(UserInterface $user)
+    public function sendResettingEmail(UserInterface $user): void
     {
     }
 }

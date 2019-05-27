@@ -32,7 +32,7 @@ class TwigSwiftMailer implements MailerInterface
         return $this->mailer->send($message);
     }
 
-    public function sendConfirmationEmail(UserInterface $user)
+    public function sendConfirmationEmail(UserInterface $user): void
     {
         $this->sendEmail([
             'recipient'       => $user->getEmail(),
@@ -49,7 +49,7 @@ class TwigSwiftMailer implements MailerInterface
         ]);
     }
 
-    public function sendResettingEmail(UserInterface $user)
+    public function sendResettingEmail(UserInterface $user): void
     {
         $this->sendEmail([
             'recipient'       => $user->getEmail(),
@@ -106,7 +106,7 @@ class TwigSwiftMailer implements MailerInterface
         $this->mailer->send($message);
     }
 
-    private function getSenderData()
+    private function getSenderData(): array
     {
         preg_match('/([^<]+)\s*(<.*>)?/', $this->sender, $matches);
 
