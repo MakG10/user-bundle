@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class ChangePasswordCommand extends Command
@@ -55,7 +56,7 @@ class ChangePasswordCommand extends Command
                 sprintf(
                     'Only classes implementing "%s" interface are supported. "%s" given.',
                     UserInterface::class,
-                    get_class($user)
+                    $user ? get_class($user) : 'null'
                 )
             );
         }
@@ -64,10 +65,30 @@ class ChangePasswordCommand extends Command
             $this->userManipulator->generateRandomPassword($user);
         } elseif ($password) {
             $user->setPlainPassword($password);
+        } else {
+            $output->writeln('You must provide a password.');
+
+            return 1;
         }
 
         $this->userManager->updateUser($user);
 
         $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $user->getEmail()));
+    }
+
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+        if (!$input->getArgument('password') && !$input->getOption('random')) {
+            $question = new Question('Please enter the new password. Leave blank for random password:');
+            $question->setHidden(true);
+
+            $answer = $this->getHelper('question')->ask($input, $output, $question);
+
+            if (empty($answer)) {
+                $input->setOption('random', true);
+            } else {
+                $input->setArgument('password', $answer);
+            }
+        }
     }
 }

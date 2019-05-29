@@ -65,7 +65,7 @@ class RolesCommand extends Command
                 sprintf(
                     'Only classes implementing "%s" interface are supported. "%s" given.',
                     UserInterface::class,
-                    get_class($user)
+                    $user ? get_class($user) : 'null'
                 )
             );
         }
