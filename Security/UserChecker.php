@@ -14,11 +14,11 @@ class UserChecker implements UserCheckerInterface
      */
     public function checkPreAuth(UserInterface $user)
     {
-        if ( ! $user instanceof \MakG\UserBundle\Entity\UserInterface) {
+        if (!$user instanceof \MakG\UserBundle\Entity\UserInterface) {
             return;
         }
 
-        if ( ! $user->isEnabled()) {
+        if (!$user->isEnabled()) {
             $exception = new DisabledException();
             $exception->setUser($user);
 
@@ -31,7 +31,7 @@ class UserChecker implements UserCheckerInterface
      */
     public function checkPostAuth(UserInterface $user)
     {
-        if ( ! $user instanceof \MakG\UserBundle\Entity\UserInterface) {
+        if (!$user instanceof \MakG\UserBundle\Entity\UserInterface) {
             return;
         }
 

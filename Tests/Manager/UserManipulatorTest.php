@@ -20,8 +20,6 @@ class UserManipulatorTest extends TestCase
         $user = new TestUser();
         $user->setEmail('tester@example.org');
 
-        $userManager = $this->createMock(UserManagerInterface::class);
-
         $avatarGenerator = $this->createMock(AvatarGeneratorInterface::class);
         $avatarGenerator
             ->expects($this->once())
@@ -38,9 +36,12 @@ class UserManipulatorTest extends TestCase
             ->method('dumpFile')
             ->with(__FILE__, 'blob');
 
-        $tokenGenerator = $this->createMock(TokenGeneratorInterface::class);
-
-        $userManipulator = new UserManipulator($userManager, $avatarGenerator, $filesystem, $tokenGenerator);
+        $userManipulator = $this->getUserManipulator(
+            [
+                'avatarGenerator' => $avatarGenerator,
+                'filesystem' => $filesystem,
+            ]
+        );
 
         $userManipulator->randomizeAvatar($user);
 
@@ -51,14 +52,81 @@ class UserManipulatorTest extends TestCase
     {
         $user = new User();
 
-        $userManager = $this->createMock(UserManagerInterface::class);
-        $avatarGenerator = $this->createMock(AvatarGeneratorInterface::class);
-        $filesystem = $this->createMock(Filesystem::class);
-        $tokenGenerator = $this->createMock(TokenGeneratorInterface::class);
-
-        $userManipulator = new UserManipulator($userManager, $avatarGenerator, $filesystem, $tokenGenerator);
+        $userManipulator = $this->getUserManipulator();
 
         $this->expectException(\InvalidArgumentException::class);
         $userManipulator->randomizeAvatar($user);
+    }
+
+    public function testGenerateRandomPassword()
+    {
+        $user = new TestUser();
+
+        $tokenGenerator = $this->createMock(TokenGeneratorInterface::class);
+        $tokenGenerator
+            ->expects($this->once())
+            ->method('generateToken')
+            ->willReturn('password');
+
+        $userManipulator = $this->getUserManipulator(['tokenGenerator' => $tokenGenerator]);
+
+        $userManipulator->generateRandomPassword($user);
+
+        $this->assertSame('password', $user->getPlainPassword());
+    }
+
+    public function testGenerateRandomToken()
+    {
+        $user = new TestUser();
+
+        $tokenGenerator = $this->createMock(TokenGeneratorInterface::class);
+        $tokenGenerator
+            ->expects($this->once())
+            ->method('generateToken')
+            ->willReturn('token');
+
+        $userManipulator = $this->getUserManipulator(['tokenGenerator' => $tokenGenerator]);
+
+        $userManipulator->generateRandomToken($user);
+
+        $this->assertSame('token', $user->getConfirmationToken());
+    }
+
+    public function testAddRole()
+    {
+        $user = new TestUser();
+
+        $userManipulator = $this->getUserManipulator();
+
+        $userManipulator->addRole($user, 'ROLE1');
+        $userManipulator->addRole($user, 'ROLE2');
+
+        $this->assertTrue($user->hasRole('ROLE1'));
+        $this->assertTrue($user->hasRole('ROLE2'));
+    }
+
+    public function testRemoveRole()
+    {
+        $user = new TestUser();
+        $user->setRoles(['ROLE1', 'ROLE2', 'ROLE3']);
+
+        $userManipulator = $this->getUserManipulator();
+
+        $userManipulator->removeRole($user, 'ROLE1');
+        $userManipulator->removeRole($user, 'ROLE3');
+
+        $this->assertFalse($user->hasRole('ROLE1'));
+        $this->assertTrue($user->hasRole('ROLE2'));
+        $this->assertFalse($user->hasRole('ROLE3'));
+    }
+
+    private function getUserManipulator(array $mocks = [])
+    {
+        $userManager = $mocks['userManager'] ?? $this->createMock(UserManagerInterface::class);
+        $avatarGenerator = $mocks['avatarGenerator'] ?? $this->createMock(AvatarGeneratorInterface::class);
+        $filesystem = $mocks['filesystem'] ?? $this->createMock(Filesystem::class);
+        $tokenGenerator = $mocks['tokenGenerator'] ?? $this->createMock(TokenGeneratorInterface::class);
+
+        return new UserManipulator($userManager, $avatarGenerator, $filesystem, $tokenGenerator);
     }
 }

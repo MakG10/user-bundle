@@ -103,7 +103,7 @@ class TwigSwiftMailer implements MailerInterface
             ->setBody($bodyText, 'text/plain')
             ->addPart($bodyHtml, 'text/html');
 
-        $this->mailer->send($message);
+        $this->send($message);
     }
 
     private function getSenderData(): array
