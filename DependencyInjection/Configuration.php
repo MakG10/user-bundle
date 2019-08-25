@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('user_class')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('firewall_name')->cannotBeEmpty()->defaultValue('main')->end()
             ->scalarNode('email_sender')->defaultNull()->end()
+            ->scalarNode('use_flash_messages')->defaultFalse()->end()
             ->arrayNode('resetting')
             ->addDefaultsIfNotSet()
             ->children()

@@ -1,0 +1,7 @@
+services:
+    makg_user.listener.flash_messages:
+        class: MakG\UserBundle\EventListener\FlashMessages
+        arguments:
+            - '@session'
+            - '@translator'
+        tags: [kernel.event_subscriber]

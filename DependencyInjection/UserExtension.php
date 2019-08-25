@@ -47,5 +47,10 @@ class UserExtension extends Extension
 
         $definition = $container->getDefinition('makg_user.twig_swift_mailer');
         $definition->replaceArgument(2, $config['email_sender']);
+
+
+        if ($config['use_flash_messages']) {
+            $loader->load('flash_messages.yaml');
+        }
     }
 }

@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class NoopMailerTest extends TestCase
 {
-
     public function testSendConfirmationEmail()
     {
         // NoopMailer does nothing...

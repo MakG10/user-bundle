@@ -33,6 +33,7 @@ services:
 
     makg_user.user_manager:
         class: MakG\UserBundle\Manager\UserManager
+        public: true
         arguments:
             - ~
             - '@doctrine.orm.entity_manager'

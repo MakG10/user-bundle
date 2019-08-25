@@ -105,6 +105,19 @@ class UserManipulatorTest extends TestCase
         $this->assertTrue($user->hasRole('ROLE2'));
     }
 
+    public function testAddRoleThatAlreadyExists()
+    {
+        $user = new TestUser();
+        $user->setRoles(['ROLE_USER', 'ROLE1', 'ROLE2']);
+
+        $userManipulator = $this->getUserManipulator();
+
+        $userManipulator->addRole($user, 'ROLE1');
+
+        $this->assertTrue($user->hasRole('ROLE1'));
+        $this->assertCount(3, $user->getRoles());
+    }
+
     public function testRemoveRole()
     {
         $user = new TestUser();
@@ -118,6 +131,18 @@ class UserManipulatorTest extends TestCase
         $this->assertFalse($user->hasRole('ROLE1'));
         $this->assertTrue($user->hasRole('ROLE2'));
         $this->assertFalse($user->hasRole('ROLE3'));
+    }
+
+    public function testRemoveNonExistingRole()
+    {
+        $user = new TestUser();
+        $user->setRoles(['ROLE2']);
+
+        $userManipulator = $this->getUserManipulator();
+
+        $userManipulator->removeRole($user, 'ROLE1');
+
+        $this->assertFalse($user->hasRole('ROLE1'));
     }
 
     private function getUserManipulator(array $mocks = [])

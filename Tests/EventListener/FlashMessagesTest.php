@@ -4,9 +4,9 @@ namespace MakG\UserBundle\Tests\EventListener;
 
 use MakG\UserBundle\Entity\User;
 use MakG\UserBundle\Event\UserEvent;
-use MakG\UserBundle\EventListener\AuthenticateUser;
 use MakG\UserBundle\EventListener\FlashMessages;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -18,7 +18,13 @@ class FlashMessagesTest extends TestCase
         $eventName = UserEvent::REGISTRATION_CONFIRMED;
         $user = new User();
 
+        $flashBag = $this->createMock(FlashBagInterface::class);
+
         $session = $this->createMock(Session::class);
+        $session
+            ->expects($this->once())
+            ->method('getFlashBag')
+            ->willReturn($flashBag);
 
         $translator = $this->createMock(TranslatorInterface::class);
         $translator
@@ -34,6 +40,6 @@ class FlashMessagesTest extends TestCase
 
     public function testGetSubscribedEvents()
     {
-        $this->assertIsArray(AuthenticateUser::getSubscribedEvents());
+        $this->assertIsArray(FlashMessages::getSubscribedEvents());
     }
 }

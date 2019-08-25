@@ -41,7 +41,19 @@ class UpdateUserCommandTest extends CommandTestCase
 
         $this->assertStringContainsString('avatar', $output);
         $this->assertStringContainsString('Activated', $output);
-        $this->assertSame(true, $user->getEnabled());
+        $this->assertTrue($user->getEnabled());
+
+
+        // Deactivate user
+        $commandTester->execute(
+            [
+                'command' => $command->getName(),
+                'email' => 'makg@example.com',
+                '--deactivate' => true,
+            ]
+        );
+
+        $this->assertFalse($user->getEnabled());
     }
 
     public function testInvalidUserProvider()

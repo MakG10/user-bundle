@@ -37,6 +37,11 @@ class SendEmails implements EventSubscriberInterface
 
         // Skip confirmation e-mail for already confirmed user
         if ($user->getEnabled()) {
+            $this->logger->debug(
+                'User is already enabled - refusing to send a confirmation e-mail.',
+                ['user' => $user->getId()]
+            );
+
             return;
         }
 

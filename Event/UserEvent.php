@@ -21,7 +21,7 @@ class UserEvent extends Event
 
     public function __construct(UserInterface $user)
     {
-        $this->user = $user;
+        $this->setUser($user);
     }
 
     public function getUser(): UserInterface
