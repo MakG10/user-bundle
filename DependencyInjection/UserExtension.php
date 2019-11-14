@@ -6,6 +6,7 @@ namespace MakG\UserBundle\DependencyInjection;
 use MakG\UserBundle\Controller\RegistrationController;
 use MakG\UserBundle\Controller\ResettingController;
 use MakG\UserBundle\Controller\SecurityController;
+use MakG\UserBundle\UserBundle;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -52,5 +53,10 @@ class UserExtension extends Extension
         if ($config['use_flash_messages']) {
             $loader->load('flash_messages.yaml');
         }
+    }
+
+    public function getAlias()
+    {
+        return UserBundle::EXTENSION_ALIAS;
     }
 }

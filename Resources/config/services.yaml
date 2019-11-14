@@ -142,4 +142,6 @@ services:
 
     MakG\UserBundle\Security\UserChecker:
         alias: 'makg_user.user_checker'
-    
+
+    MakG\UserBundle\Security\LoginManagerInterface:
+        alias: 'makg_user.login_manager'

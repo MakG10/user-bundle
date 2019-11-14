@@ -14,7 +14,7 @@
         {% import '@User/emails/base.html.twig' as email_helper %}
 
         {% block subject %}
-            {{ subject | default('You have requested a new password' | trans) }}
+            {{ subject | default('resetting.email.subject' | trans) }}
         {% endblock %}
 
         {% block body %}

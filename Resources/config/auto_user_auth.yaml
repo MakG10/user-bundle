@@ -1,0 +1,6 @@
+services:
+  makg_user.listener.authenticate_user:
+    class: MakG\UserBundle\EventListener\AuthenticateUser
+    arguments:
+      - '@MakG\UserBundle\Security\LoginManagerInterface'
+    tags: [kernel.event_subscriber]

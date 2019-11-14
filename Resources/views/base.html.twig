@@ -9,6 +9,7 @@
 
     <style>
         body {
+            font-family: Helvetica, Arial, sans-serif;
             background-color: #6bb4e8;
         }
 
@@ -28,16 +29,26 @@
             box-shadow: 0 0 16px #444;
         }
 
-        input, button {
-            margin: 0 0 0.5rem;
-            padding: 0.5rem;
+        form > div > div {
+            margin-bottom: 1rem;
+        }
 
-            background-color: #EEE;
-            border: 1px solid #CCC;
-            border-radius: 3px;
+        input, button {
+            padding: 0.5rem 0.6rem;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 1px 3px #ddd;
+            border-radius: 4px;
         }
 
         button {
+            display: block;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        label {
+            display: block;
             font-weight: 600;
         }
     </style>

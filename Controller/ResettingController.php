@@ -56,7 +56,7 @@ class ResettingController extends AbstractController
                 'enabled' => true,
             ]);
 
-            $canRequestAgain = $user && $user->hasPasswordRequestExpired($this->retryTtl); // TODO
+            $canRequestAgain = $user && $user->hasPasswordRequestExpired($this->retryTtl);
 
             if ($canRequestAgain) {
                 $user->setPasswordRequestedAt(new \DateTime());
@@ -97,8 +97,8 @@ class ResettingController extends AbstractController
             'enabled'           => true,
         ]);
 
-        if (!$user || $user->hasPasswordRequestExpired($this->tokenTtl)) { // TODO
-            $this->addFlash('error', $this->translator->trans('Invalid token.'));
+        if (!$user || $user->hasPasswordRequestExpired($this->tokenTtl)) {
+            $this->addFlash('error', $this->translator->trans('resetting.error'));
 
             return $this->redirectToRoute('mg_user_security_login');
         }
@@ -113,13 +113,13 @@ class ResettingController extends AbstractController
             $this->userManager->updateUser($user);
 
             $event = new UserEvent($user);
-            $this->eventDispatcher->dispatch(UserEvent::PASSWORD_RESET_COMPLETED, $event); // TODO subscriber
+            $this->eventDispatcher->dispatch(UserEvent::PASSWORD_RESET_COMPLETED, $event);
 
             if (null !== $response = $event->getResponse()) {
                 return $response;
             }
 
-            return $this->redirectToRoute('index'); // TODO
+            return $this->redirectToRoute('mg_user_security_login');
         }
 
         return $this->render('@User/resetting/reset.html.twig', [

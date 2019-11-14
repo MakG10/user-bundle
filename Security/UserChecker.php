@@ -31,10 +31,6 @@ class UserChecker implements UserCheckerInterface
      */
     public function checkPostAuth(UserInterface $user)
     {
-        if (!$user instanceof \MakG\UserBundle\Entity\UserInterface) {
-            return;
-        }
-
-        // TODO?
+        $this->checkPreAuth($user);
     }
 }

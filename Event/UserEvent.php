@@ -4,8 +4,8 @@ namespace MakG\UserBundle\Event;
 
 
 use MakG\UserBundle\Entity\UserInterface;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UserEvent extends Event
 {

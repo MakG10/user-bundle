@@ -4,7 +4,9 @@ registration.email.message: |
 
     %confirmation_url%
 registration.email.button: Confirm your registration
-
+registration.confirm.required: Registration is complete. Check your inbox for an e-mail with activation link.
+registration.confirm.error: Invalid token. Please make sure you entered a correct URL.
+registration.confirm.success: Your account has been activated. You can sign in now.
 resetting.check_email: If an account with given e-mail address exists, expect a message with further instructions.
 resetting.email.subject: You have requested a new password
 resetting.email.message: |
@@ -14,3 +16,14 @@ resetting.email.message: |
 
     If you didn't request to change a password, you can simply ignore this message.
 resetting.email.button: Change the password
+resetting.error: Invalid token. Please make sure you entered a correct URL.
+resetting.success: New password has been set. You can sign in now.
+'E-mail': E-mail
+Password: Password
+'Remember me': Remember me
+'Sign in': Sign in
+'Request password change': 'Request password change'
+'Display name': Display name
+'Repeat password': Repeat password
+'Sign up': Sign up
+'Change password': Change password

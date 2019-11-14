@@ -4,7 +4,9 @@ registration.email.message: |
 
   %confirmation_url%
 registration.email.button: Potwierdź rejestrację
-
+registration.confirm.required: Registration is complete. Check your inbox for an e-mail with activation link.
+registration.confirm.error: Nieprawidłowy token. Upewnij się, że wkleiłeś poprawny adres URL.
+registration.confirm.success: Twoje konto jest teraz aktywne. Możesz się zalogować.
 resetting.check_email: Jeżeli konto z takim adresem e-mail istnieje, zostanie wysłana wiadomość z dalszymi instrukcjami.
 resetting.email.subject: Prośba o zmianę hasła
 resetting.email.message: |
@@ -14,3 +16,14 @@ resetting.email.message: |
 
   Jeżeli to nie ty wysłałeś prośbę o zmianę hasła, to możesz zignorować tę wiadomość
 resetting.email.button: Zmień hasło
+resetting.error: Nieprawidłowy token. Upewnij się, że wkleiłeś poprawny adres URL.
+resetting.success: Nowe hasło zostało ustawione. Możesz się zalogować.
+'E-mail': E-mail
+Password: Hasło
+'Remember me': Zapamiętaj mnie
+'Sign in': Zaloguj się
+'Request password change': 'Zresetuj hasło'
+'Display name': Wyświetlana nazwa
+'Repeat password': Powtórz hasło
+'Sign up': Zarejestruj się
+'Change password': Zmień hasło
