@@ -22,8 +22,7 @@ class UserExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
 
-        $definition = $container->getDefinition('makg_user.user_manager');
-        $definition->replaceArgument(0, $config['user_class']);
+        $container->setParameter('makg_user.user_class', $config['user_class']);
 
         $definition = $container->getDefinition('makg_user.login_manager');
         $definition->replaceArgument(1, $config['firewall_name']);

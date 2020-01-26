@@ -27,3 +27,9 @@ Password: Password
 'Repeat password': Repeat password
 'Sign up': Sign up
 'Change password': Change password
+action.new: Add user
+action.search: Search users
+action.edit: Edit
+action.delete: Delete
+action.list: Return to users
+action.save: Save user

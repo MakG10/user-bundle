@@ -28,6 +28,7 @@
     }
   },
   "require-dev": {
+    "easycorp/easyadmin-bundle": "^2.0",
     "phpunit/phpunit": "^8.0",
     "yzalis/identicon": "^1.2",
     "swiftmailer/swiftmailer": "^6.1.3"

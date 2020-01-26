@@ -27,3 +27,13 @@ Password: Hasło
 'Repeat password': Powtórz hasło
 'Sign up': Zarejestruj się
 'Change password': Zmień hasło
+User: Użytkownik
+'Set password': Ustaw hasło
+Roles: Role
+Enabled: Aktywny
+action.new: Dodaj użytkownika
+action.search: Szukaj użytkowników
+action.edit: Edytuj
+action.delete: Usuń
+action.list: Wróć do listy użytkowników
+action.save: Zapisz użytkownika

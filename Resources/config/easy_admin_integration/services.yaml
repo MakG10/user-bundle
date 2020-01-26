@@ -1,0 +1,8 @@
+services:
+  makg_user.listener.easy_admin_update_user:
+    class: MakG\UserBundle\EventListener\EasyAdmin\UpdateUser
+    arguments:
+      - '@MakG\UserBundle\Manager\UserManagerInterface'
+      - '@MakG\UserBundle\Manager\UserManipulatorInterface'
+      - '%makg_user.user_class%'
+    tags: [kernel.event_subscriber]

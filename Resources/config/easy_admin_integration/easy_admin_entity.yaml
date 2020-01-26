@@ -1,0 +1,20 @@
+easy_admin:
+  entities:
+    User:
+      class: '%makg_user.user_class%'
+      label: User
+      translation_domain: MakGUserBundle
+      list:
+        fields:
+          - id
+          - email
+          - displayName
+          - roles
+          - enabled
+      form:
+        fields:
+          - email
+          - displayName
+          - { property: plainPassword, label: 'Set password', type: password }
+          - roles
+          - enabled

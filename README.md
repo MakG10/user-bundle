@@ -82,7 +82,7 @@ security:
 ```yaml
 # /config/packages/makg_user.yaml
 
-user:
+makg_user:
     user_class: App\Entity\User
 ```
 
@@ -181,3 +181,25 @@ class User extends \MakG\UserBundle\Entity\User
     use AvatarTrait;
 }
 ```
+
+### Easy Admin integration
+
+This bundle provides simple integration with [EasyAdminBundle](https://github.com/EasyCorp/EasyAdminBundle). It provides event subscriber handling updating user and yaml configuration for EasyAdmin.
+
+To enable this integration, you need to import configuration files in your `services.yaml`, `makg_user.yaml` or `easy_admin.yaml` files.
+
+```
+# /config/services.yaml
+
+imports:
+    - { resource: '@UserBundle/Resources/config/easy_admin_integration/services.yaml' }
+```
+
+```
+# /config/easy_admin.yaml
+
+imports:
+    - { resource: '@UserBundle/Resources/config/easy_admin_integration/easy_admin_entity.yaml' }
+```
+
+> IMPORTANT: In your /config/bundles.php file, UserBundle has to be added before EasyAdminBundle, as the integration uses `makg_user.user_class` parameter. Otherwise you may get `You have requested a non-existent parameter "makg_user.user_class".` error.

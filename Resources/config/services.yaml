@@ -35,7 +35,7 @@ services:
         class: MakG\UserBundle\Manager\UserManager
         public: true
         arguments:
-            - ~
+            - '%makg_user.user_class%'
             - '@doctrine.orm.entity_manager'
             - '@security.password_encoder'
 
