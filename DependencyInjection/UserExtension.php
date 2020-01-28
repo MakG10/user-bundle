@@ -23,6 +23,7 @@ class UserExtension extends Extension
         $loader->load('services.yaml');
 
         $container->setParameter('makg_user.user_class', $config['user_class']);
+        $container->setParameter('makg_user.email_sender', $config['email_sender']);
 
         $definition = $container->getDefinition('makg_user.login_manager');
         $definition->replaceArgument(1, $config['firewall_name']);
@@ -44,9 +45,6 @@ class UserExtension extends Extension
 
         $definition = $container->getDefinition(SecurityController::class);
         $definition->replaceArgument(0, $config['form_types']['login']);
-
-        $definition = $container->getDefinition('makg_user.twig_swift_mailer');
-        $definition->replaceArgument(2, $config['email_sender']);
 
 
         if ($config['use_flash_messages']) {

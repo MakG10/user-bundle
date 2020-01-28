@@ -3,121 +3,30 @@
 namespace MakG\UserBundle\Mailer;
 
 
-use MakG\UserBundle\Entity\UserInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use MakG\UserBundle\Dto\EmailMessage;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
-class TwigSwiftMailer implements MailerInterface
+class TwigSwiftMailer extends AbstractTwigMailer
 {
     private $mailer;
-    private $twig;
-    private $sender;
-    private $router;
 
-    public function __construct(
-        \Swift_Mailer $mailer,
-        \Twig_Environment $twig,
-        ?string $sender,
-        RouterInterface $router
-    )
+    public function __construct(\Swift_Mailer $mailer, Environment $twig, ?string $sender, RouterInterface $router)
     {
+        parent::__construct($twig, $router, $sender);
+
         $this->mailer = $mailer;
-        $this->twig   = $twig;
-        $this->sender = $sender;
-        $this->router = $router;
     }
 
-    public function send(\Swift_Message $message)
+    public function send(EmailMessage $emailMessage): void
     {
-        return $this->mailer->send($message);
-    }
+        $messageContent = $emailMessage->messageContent;
+        $message = (new \Swift_Message($messageContent->subject))
+            ->setTo($emailMessage->recipientEmail)
+            ->setFrom($emailMessage->senderEmail, $emailMessage->senderName)
+            ->setBody($messageContent->bodyText, 'text/plain')
+            ->addPart($messageContent->bodyHtml, 'text/html');
 
-    public function sendConfirmationEmail(UserInterface $user): void
-    {
-        $this->sendEmail([
-            'recipient'       => $user->getEmail(),
-            'template'        => '@User/emails/confirmation.html.twig',
-            'template_params' => [
-                'user'              => $user,
-                'confirmationToken' => $user->getConfirmationToken(),
-                'confirmationUrl'   => $this->router->generate(
-                    'mg_user_registration_confirm',
-                    ['token' => $user->getConfirmationToken()],
-                    RouterInterface::ABSOLUTE_URL
-                ),
-            ],
-        ]);
-    }
-
-    public function sendResettingEmail(UserInterface $user): void
-    {
-        $this->sendEmail([
-            'recipient'       => $user->getEmail(),
-            'template'        => '@User/emails/resetting.html.twig',
-            'template_params' => [
-                'user'              => $user,
-                'confirmationToken' => $user->getConfirmationToken(),
-                'confirmationUrl'   => $this->router->generate(
-                    'mg_user_resetting_reset',
-                    ['token' => $user->getConfirmationToken()],
-                    RouterInterface::ABSOLUTE_URL
-                ),
-            ],
-        ]);
-    }
-
-    protected function sendEmail(array $options = []): void
-    {
-        $resolver = new OptionsResolver();
-        $resolver->setDefaults(
-            [
-                'template' => null,
-                'template_params' => [],
-                'subject' => null,
-                'content' => null,
-            ]
-        );
-        $resolver->setRequired(['recipient']);
-
-        $options = $resolver->resolve($options);
-
-
-        $subject = $options['subject'];
-        $bodyText = $options['content'];
-        $bodyHtml = $options['content'];
-        $recipient = $options['recipient'];
-        $senderData = $this->getSenderData();
-
-        // Override subject and body from provided template
-        if ($options['template']) {
-            $template = $this->twig->load($options['template']);
-
-            $subject = $template->renderBlock('subject', $options['template_params']);
-            $bodyText = $template->renderBlock('body_text', $options['template_params']);
-            $bodyHtml = $template->renderBlock('body_html', $options['template_params']);
-        }
-
-        $message = (new \Swift_Message($subject))
-            ->setTo($recipient)
-            ->setFrom($senderData[0], $senderData[1])
-            ->setBody($bodyText, 'text/plain')
-            ->addPart($bodyHtml, 'text/html');
-
-        $this->send($message);
-    }
-
-    private function getSenderData(): array
-    {
-        preg_match('/([^<]+)\s*(<.*>)?/', $this->sender, $matches);
-
-        $senderName = isset($matches[1]) ? trim($matches[1]) : null;
-        $email = isset($matches[2]) ? trim($matches[2], " \t<>") : null;
-
-        if (empty($email)) {
-            $email = $matches[1] ?? null;
-            $senderName = null;
-        }
-
-        return [$email, $senderName];
+        $this->mailer->send($message);
     }
 }

@@ -55,8 +55,16 @@ services:
         arguments:
             - '@mailer'
             - '@twig'
-            - ~
+            - '%makg_user.email_sender%'
             - '@router'
+
+    makg_user.twig_symfony_mailer:
+        class: MakG\UserBundle\Mailer\TwigSymfonyMailer
+        arguments:
+            - '@mailer'
+            - '@twig'
+            - '@router'
+            - '%makg_user.email_sender'
 
     makg_user.login_manager:
         class: MakG\UserBundle\Security\LoginManager
