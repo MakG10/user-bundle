@@ -98,7 +98,7 @@ class ResettingController extends AbstractController
         ]);
 
         if (!$user || $user->hasPasswordRequestExpired($this->tokenTtl)) {
-            $this->addFlash('error', $this->translator->trans('resetting.error'));
+            $this->addFlash('error', $this->translator->trans('resetting.error', [], 'MakGUserBundle'));
 
             return $this->redirectToRoute('mg_user_security_login');
         }

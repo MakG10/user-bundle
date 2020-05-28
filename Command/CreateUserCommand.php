@@ -80,5 +80,7 @@ class CreateUserCommand extends Command
 
             $output->writeln('Sent password resetting e-mail.');
         }
+
+        return 0;
     }
 }

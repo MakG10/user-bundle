@@ -82,5 +82,7 @@ class RolesCommand extends Command
         $this->userManager->updateUser($user);
 
         $output->writeln(sprintf('Roles set for user <comment>%s</comment>', $user->getEmail()));
+
+        return 0;
     }
 }

@@ -30,6 +30,8 @@ class PromoteCommandTest extends CommandTestCase
             protected function execute(InputInterface $input, OutputInterface $output)
             {
                 $output->writeln('Roles Command executed.');
+
+                return 0;
             }
         };
 

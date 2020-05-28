@@ -368,7 +368,9 @@
             <div class="content">
 
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader">{{ block('subject') }}</span>
+                {% if block('subject') is defined %}
+                    <span class="preheader">{{ block('subject') }}</span>
+                {% endif %}
                 <table class="main">
 
                     <!-- START MAIN CONTENT AREA -->

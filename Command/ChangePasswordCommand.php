@@ -74,6 +74,8 @@ class ChangePasswordCommand extends Command
         $this->userManager->updateUser($user);
 
         $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $user->getEmail()));
+
+        return 0;
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)

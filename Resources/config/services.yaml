@@ -3,6 +3,9 @@ services:
     MakG\UserBundle\Controller\RegistrationController:
         class: MakG\UserBundle\Controller\RegistrationController
         public: true
+        calls:
+            -   method: setContainer
+                arguments: ['@service_container']
         arguments:
             - '@MakG\UserBundle\Manager\UserManagerInterface'
             - '@event_dispatcher'
@@ -11,6 +14,9 @@ services:
     MakG\UserBundle\Controller\ResettingController:
         class: MakG\UserBundle\Controller\ResettingController
         public: true
+        calls:
+            -   method: setContainer
+                arguments: ['@service_container']
         arguments:
             - '@MakG\UserBundle\Manager\UserManagerInterface'
             - '@event_dispatcher'
@@ -23,6 +29,9 @@ services:
     MakG\UserBundle\Controller\SecurityController:
         class: MakG\UserBundle\Controller\SecurityController
         public: true
+        calls:
+            -   method: setContainer
+                arguments: ['@service_container']
         arguments:
             - ~
             - '@security.authentication_utils'
@@ -140,7 +149,7 @@ services:
         alias: 'makg_user.avatar_generator.identicon'
 
     MakG\UserBundle\Mailer\MailerInterface:
-        alias: 'makg_user.twig_swift_mailer'
+        alias: 'makg_user.twig_symfony_mailer'
 
     MakG\UserBundle\Manager\UserManagerInterface:
         alias: 'makg_user.user_manager'

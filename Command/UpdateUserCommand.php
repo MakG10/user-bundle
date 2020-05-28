@@ -77,5 +77,7 @@ class UpdateUserCommand extends Command
         }
 
         $this->userManager->updateUser($user);
+
+        return 0;
     }
 }

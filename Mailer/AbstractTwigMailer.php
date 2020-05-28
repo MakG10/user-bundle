@@ -58,7 +58,7 @@ abstract class AbstractTwigMailer implements MailerInterface
         $this->send($emailMessage);
     }
 
-    private function createEmailMessageContentFromTemplate(string $template, array $context = []): EmailMessageContent
+    protected function createEmailMessageContentFromTemplate(string $template, array $context = []): EmailMessageContent
     {
         $template = $this->twig->load($template);
 
