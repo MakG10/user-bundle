@@ -73,7 +73,7 @@ services:
             - '@mailer'
             - '@twig'
             - '@router'
-            - '%makg_user.email_sender'
+            - '%makg_user.email_sender%'
 
     makg_user.login_manager:
         class: MakG\UserBundle\Security\LoginManager
@@ -110,6 +110,7 @@ services:
             - '@MakG\UserBundle\Manager\UserManagerInterface'
             - '@MakG\UserBundle\Manager\UserManipulatorInterface'
             - '@MakG\UserBundle\Mailer\MailerInterface'
+            - '@validator'
         tags: [console.command]
 
     makg_user.command.update_user:

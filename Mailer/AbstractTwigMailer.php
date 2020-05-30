@@ -78,7 +78,7 @@ abstract class AbstractTwigMailer implements MailerInterface
 
         if (empty($email)) {
             $email = $matches[1] ?? null;
-            $senderName = null;
+            $senderName = '';
         }
 
         $this->senderEmail = $email;

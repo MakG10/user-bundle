@@ -3,6 +3,7 @@
 namespace MakG\UserBundle\Command;
 
 
+use MakG\UserBundle\Entity\UserInterface;
 use MakG\UserBundle\Mailer\MailerInterface;
 use MakG\UserBundle\Manager\UserManagerInterface;
 use MakG\UserBundle\Manager\UserManipulatorInterface;
@@ -11,23 +12,28 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreateUserCommand extends Command
 {
     private $userManager;
     private $userManipulator;
     private $mailer;
+    private $validator;
 
     public function __construct(
         UserManagerInterface $userManager,
         UserManipulatorInterface $userManipulator,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        ValidatorInterface $validator
     ) {
         parent::__construct();
 
         $this->userManager = $userManager;
         $this->userManipulator = $userManipulator;
         $this->mailer = $mailer;
+        $this->validator = $validator;
     }
 
     protected function configure()
@@ -56,14 +62,19 @@ class CreateUserCommand extends Command
         $email = $input->getArgument('email');
         $enabled = !$input->getOption('inactive');
 
-        $user = $this->userManager->createUser();
-        $user->setEmail($email);
-        $user->setEnabled($enabled);
+        $user = $this->createUser($email, $enabled);
 
-        // Generate random password which won't be revealed
-        $this->userManipulator->generateRandomPassword($user);
+        $errors = $this->validator->validate($user, null, ['Default', 'CreateCommand']);
 
-        $this->userManipulator->generateRandomToken($user);
+        if ($errors->count() > 0) {
+            /** @var ConstraintViolationInterface $error */
+            foreach ($errors as $error) {
+                $output->writeln("<error>{$error->getMessage()}</error>");
+            }
+
+            return 1;
+        }
+
         $this->userManager->updateUser($user);
 
         $output->writeln(sprintf('Created user <comment>%s</comment>', $user->getEmail()));
@@ -82,5 +93,18 @@ class CreateUserCommand extends Command
         }
 
         return 0;
+    }
+
+    private function createUser(string $email, bool $enabled): UserInterface
+    {
+        $user = $this->userManager->createUser();
+        $user->setEmail($email);
+        $user->setEnabled($enabled);
+
+        // Generate random password which won't be revealed
+        $this->userManipulator->generateRandomPassword($user);
+        $this->userManipulator->generateRandomToken($user);
+
+        return $user;
     }
 }
