@@ -39,11 +39,11 @@ class RegistrationController extends AbstractController
 
 		if ($form->isSubmitted() && $form->isValid()) {
 		    $event = new UserEvent($user);
-            $this->eventDispatcher->dispatch(UserEvent::REGISTRATION_SUCCESS, $event);
+            $this->eventDispatcher->dispatch($event, UserEvent::REGISTRATION_SUCCESS);
 
 			$this->userManager->updateUser($user);
 
-            $this->eventDispatcher->dispatch(UserEvent::REGISTRATION_COMPLETED, $event);
+            $this->eventDispatcher->dispatch($event, UserEvent::REGISTRATION_COMPLETED);
 
             if (null !== $response = $event->getResponse()) {
                 return $response;
@@ -54,7 +54,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && ! $form->isValid()) {
             $event = new UserEvent($user);
-            $this->eventDispatcher->dispatch(UserEvent::REGISTRATION_FAILURE, $event);
+            $this->eventDispatcher->dispatch($event, UserEvent::REGISTRATION_FAILURE);
 
             if (null !== $response = $event->getResponse()) {
                 return $response;
@@ -92,7 +92,7 @@ class RegistrationController extends AbstractController
         $this->userManager->updateUser($user);
 
         $event = new UserEvent($user);
-        $this->eventDispatcher->dispatch(UserEvent::REGISTRATION_CONFIRMED, $event);
+        $this->eventDispatcher->dispatch($event, UserEvent::REGISTRATION_CONFIRMED);
 
         return $this->render('@User/registration/confirm_success.html.twig');
     }

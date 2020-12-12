@@ -62,7 +62,7 @@ class ResettingController extends AbstractController
                 $user->setPasswordRequestedAt(new \DateTime());
 
                 $event = new UserEvent($user);
-                $this->eventDispatcher->dispatch(UserEvent::PASSWORD_RESET_REQUESTED, $event); // TODO subscriber
+                $this->eventDispatcher->dispatch($event, UserEvent::PASSWORD_RESET_REQUESTED);
 
                 $this->userManager->updateUser($user);
 
@@ -113,7 +113,7 @@ class ResettingController extends AbstractController
             $this->userManager->updateUser($user);
 
             $event = new UserEvent($user);
-            $this->eventDispatcher->dispatch(UserEvent::PASSWORD_RESET_COMPLETED, $event);
+            $this->eventDispatcher->dispatch($event, UserEvent::PASSWORD_RESET_COMPLETED);
 
             if (null !== $response = $event->getResponse()) {
                 return $response;
