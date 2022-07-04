@@ -8,6 +8,8 @@ use MakG\UserBundle\Mailer\MailerInterface;
 use MakG\UserBundle\Manager\UserManagerInterface;
 use MakG\UserBundle\Manager\UserManipulatorInterface;
 use MakG\UserBundle\Tests\CommandTestCase;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreateUserCommandTest extends CommandTestCase
 {
@@ -28,7 +30,13 @@ class CreateUserCommandTest extends CommandTestCase
             ->expects($this->once())
             ->method('sendResettingEmail');
 
-        $command = new CreateUserCommand($userManager, $userManipulator, $mailer);
+        $validator = $this->createMock(ValidatorInterface::class);
+        $validator
+            ->expects($this->once())
+            ->method('validate')
+            ->willReturn(new ConstraintViolationList([]));
+
+        $command = new CreateUserCommand($userManager, $userManipulator, $mailer, $validator);
 
         $commandTester = $this->createCommandTester('makg:user:create', $command);
         $commandTester->execute(

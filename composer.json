@@ -12,15 +12,15 @@
   ],
   "require": {
     "php": ">=7.1",
-    "symfony/dependency-injection": "^4.2 || ^5.0",
-    "symfony/http-kernel": "^4.2 || ^5.0",
-    "symfony/config": "^4.2 || ^5.0",
+    "symfony/dependency-injection": "^4.2 || ^5.0 || ^6.0",
+    "symfony/http-kernel": "^4.2 || ^5.0 || ^6.0",
+    "symfony/config": "^4.2 || ^5.0 || ^6.0",
     "symfony/orm-pack": "^1.0 || ^2.0",
-    "symfony/security-core": "^4.2 || ^5.0",
-    "symfony/form": "^4.2 || ^5.0",
-    "symfony/templating": "^4.2 || ^5.0",
-    "symfony/twig-bundle": "^4.2 || ^5.0",
-    "symfony/translation": "^4.2 || ^5.0"
+    "symfony/security-core": "^4.2 || ^5.0 || ^6.0",
+    "symfony/form": "^4.2 || ^5.0 || ^6.0",
+    "symfony/templating": "^4.2 || ^5.0 || ^6.0",
+    "symfony/twig-bundle": "^4.2 || ^5.0 || ^6.0",
+    "symfony/translation": "^4.2 || ^5.0 || ^6.0"
   },
   "autoload": {
     "psr-4": {
@@ -36,5 +36,10 @@
   },
   "suggest": {
     "yzalis/identicon": "^1.2"
+  },
+  "config": {
+    "allow-plugins": {
+      "ocramius/package-versions": false
+    }
   }
 }

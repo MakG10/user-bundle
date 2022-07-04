@@ -36,7 +36,7 @@ class TwigSwiftMailerTest extends TestCase
     {
         $params = [
             'sender_email' => 'test@example.com',
-            'sender_name' => null,
+            'sender_name' => '',
             'email' => 'user2@example.com',
             'subject' => 'subject2',
             'body_text' => 'text2',
