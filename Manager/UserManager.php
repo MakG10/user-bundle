@@ -8,7 +8,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use MakG\UserBundle\Entity\AvatarInterface;
 use MakG\UserBundle\Entity\UserInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManager implements UserManagerInterface
 {
@@ -17,9 +17,9 @@ class UserManager implements UserManagerInterface
     private $passwordEncoder;
 
     public function __construct(
-        string $userClass,
-        EntityManagerInterface $entityManager,
-        UserPasswordEncoderInterface $passwordEncoder
+        string                      $userClass,
+        EntityManagerInterface      $entityManager,
+        UserPasswordHasherInterface $passwordEncoder
     ) {
         $this->userClass = $userClass;
         $this->entityManager = $entityManager;
@@ -57,10 +57,9 @@ class UserManager implements UserManagerInterface
         return $this->userClass;
     }
 
-
     private function updatePassword(UserInterface $user)
     {
-        $encodedPassword = $this->passwordEncoder->encodePassword($user, $user->getPlainPassword());
+        $encodedPassword = $this->passwordEncoder->hashPassword($user, $user->getPlainPassword());
 
         $user->setPassword($encodedPassword);
     }

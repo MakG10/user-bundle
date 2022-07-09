@@ -3,9 +3,8 @@ services:
     MakG\UserBundle\Controller\RegistrationController:
         class: MakG\UserBundle\Controller\RegistrationController
         public: true
-        calls:
-            -   method: setContainer
-                arguments: ['@service_container']
+        autoconfigure: true
+        autowire: true
         arguments:
             - '@MakG\UserBundle\Manager\UserManagerInterface'
             - '@event_dispatcher'
@@ -14,9 +13,8 @@ services:
     MakG\UserBundle\Controller\ResettingController:
         class: MakG\UserBundle\Controller\ResettingController
         public: true
-        calls:
-            -   method: setContainer
-                arguments: ['@service_container']
+        autoconfigure: true
+        autowire: true
         arguments:
             - '@MakG\UserBundle\Manager\UserManagerInterface'
             - '@event_dispatcher'
@@ -29,9 +27,8 @@ services:
     MakG\UserBundle\Controller\SecurityController:
         class: MakG\UserBundle\Controller\SecurityController
         public: true
-        calls:
-            -   method: setContainer
-                arguments: ['@service_container']
+        autoconfigure: true
+        autowire: true
         arguments:
             - ~
             - '@security.authentication_utils'
@@ -46,7 +43,7 @@ services:
         arguments:
             - '%makg_user.user_class%'
             - '@doctrine.orm.entity_manager'
-            - '@security.password_encoder'
+            - '@security.password_hasher'
 
     makg_user.user_manipulator:
         class: MakG\UserBundle\Manager\UserManipulator

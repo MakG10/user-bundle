@@ -3,15 +3,20 @@
 namespace MakG\UserBundle\Entity;
 
 
-interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterface
+interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterface, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
 {
     public function getId();
+
     public function getEmail(): ?string;
 
     public function setEmail(?string $email);
+
     public function isEnabled(): bool;
+
     public function setEnabled(bool $enabled);
+
     public function getConfirmationToken(): ?string;
+
     public function setConfirmationToken(?string $token);
 
     public function setPasswordRequestedAt(?\DateTimeInterface $passwordRequestedAt);

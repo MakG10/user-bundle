@@ -52,7 +52,7 @@ class UserExtension extends Extension
         }
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return UserBundle::EXTENSION_ALIAS;
     }

@@ -55,8 +55,8 @@ class User extends \MakG\UserBundle\Entity\User
 # /config/packages/security.yaml
 
 security:
-    encoders:
-        App\Entity\User: bcrypt
+    password_hashers:
+        App\Users\Entity\User: 'bcrypt'
     providers:
         makg_userbundle:
             id: makg_user.user_provider

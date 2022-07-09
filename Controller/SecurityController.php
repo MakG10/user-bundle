@@ -9,28 +9,27 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    private $loginFormType;
-    private $authenticationUtils;
+    private string $loginFormType;
+    private AuthenticationUtils $authenticationUtils;
 
     public function __construct(string $loginFormType, AuthenticationUtils $authenticationUtils)
     {
-        $this->loginFormType       = $loginFormType;
+        $this->loginFormType = $loginFormType;
         $this->authenticationUtils = $authenticationUtils;
     }
 
     /**
-	 * @Route("/sign-in", name="mg_user_security_login")
-	 */
+     * @Route("/sign-in", name="mg_user_security_login")
+     */
     public function login()
     {
         $error = $this->authenticationUtils->getLastAuthenticationError();
-        $form  = $this->createForm($this->loginFormType);
+        $form = $this->createForm($this->loginFormType);
 
-        return $this->render(
-            '@User/security/login.html.twig',
-            [
-			'form' => $form->createView(),
-			'error' => $error,
-		]);
-	}
+        return
+            $this->render('@User/security/login.html.twig', [
+                'form' => $form->createView(),
+                'error' => $error,
+            ]);
+    }
 }

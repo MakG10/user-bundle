@@ -16,7 +16,7 @@ abstract class AbstractTwigMailer implements MailerInterface
     private $senderEmail;
     private $senderName;
 
-    public function __construct(Environment $twig, RouterInterface $router, string $sender)
+    public function __construct(Environment $twig, RouterInterface $router, ?string $sender)
     {
         $this->twig = $twig;
         $this->router = $router;
@@ -69,9 +69,9 @@ abstract class AbstractTwigMailer implements MailerInterface
         return new EmailMessageContent($subject, $bodyText, $bodyHtml);
     }
 
-    private function setSender(string $sender)
+    private function setSender(?string $sender)
     {
-        preg_match('/([^<]+)\s*(<.*>)?/', $sender, $matches);
+        preg_match('/([^<]+)\s*(<.*>)?/', (string)$sender, $matches);
 
         $senderName = isset($matches[1]) ? trim($matches[1]) : null;
         $email = isset($matches[2]) ? trim($matches[2], " \t<>") : null;

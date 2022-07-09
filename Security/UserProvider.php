@@ -6,7 +6,7 @@ namespace MakG\UserBundle\Security;
 use MakG\UserBundle\Entity\UserInterface;
 use MakG\UserBundle\Manager\UserManagerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface
@@ -21,12 +21,20 @@ class UserProvider implements UserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername(string $username)
     {
-        $user = $this->userManager->findUserBy(['email' => $username]);
+        return $this->loadUserByIdentifier($username);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        $user = $this->userManager->findUserBy(['email' => $identifier]);
 
         if (null === $user) {
-            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
+            throw new UserNotFoundException(sprintf('Username "%s" does not exist.', $identifier));
         }
 
         return $user;
@@ -47,7 +55,7 @@ class UserProvider implements UserProviderInterface
         $refreshedUser = $this->userManager->findUserBy(['id' => $user->getId()]);
 
         if (null === $refreshedUser) {
-            throw new UsernameNotFoundException(
+            throw new UserNotFoundException(
                 sprintf('User with ID "%s" was not found during refresh.', $user->getId())
             );
         }
@@ -58,7 +66,7 @@ class UserProvider implements UserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsClass($class)
+    public function supportsClass(string $class)
     {
         $userClass = $this->userManager->getUserClass();
 

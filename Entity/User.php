@@ -105,7 +105,7 @@ class User implements UserInterface, EquatableInterface
         return $this;
     }
 
-	public function getRoles(): ?array
+	public function getRoles(): array
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
@@ -231,5 +231,10 @@ class User implements UserInterface, EquatableInterface
     public function isEqualTo(\Symfony\Component\Security\Core\User\UserInterface $user): bool
     {
         return $user->getUsername() === $this->getUsername() && $this->isEnabled();
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getEmail();
     }
 }
