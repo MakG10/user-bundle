@@ -1,3 +1,14 @@
-mg_user_resetting:
-    resource: '@UserBundle/Controller/ResettingController.php'
-    type: annotation
+mg_user_resetting_request:
+    path: /request-new-password
+    controller: MakG\UserBundle\Controller\ResettingController::request
+    methods: [ GET, POST ]
+
+mg_user_resetting_check_email:
+    path: /check-email
+    controller: MakG\UserBundle\Controller\ResettingController::checkEmail
+    methods: [ GET ]
+
+mg_user_resetting_reset:
+    path: /reset-password/{token}
+    controller: MakG\UserBundle\Controller\ResettingController::reset
+    methods: [ GET, POST ]

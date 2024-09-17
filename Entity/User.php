@@ -3,56 +3,41 @@
 namespace MakG\UserBundle\Entity;
 
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\MappedSuperclass;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 
-/**
- * @ORM\MappedSuperclass
- * @UniqueEntity(fields="email", message="Email already taken")
- */
+#[MappedSuperclass]
+#[UniqueEntity(fields: 'email', message: 'Email already taken')]
 class User implements UserInterface, EquatableInterface
 {
-	/**
-	 * @ORM\Id()
-	 * @ORM\GeneratedValue()
-	 * @ORM\Column(type="integer")
-	 */
+    #[Id]
+    #[GeneratedValue]
+    #[Column(type: 'integer')]
     protected $id;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
+    #[Column(type: 'string', length: 255)]
     protected $email;
 
-    /**
-     * @ORM\Column(type="string", length=30, nullable=true)
-     */
+    #[Column(type: 'string', length: 30, nullable: true)]
     protected $displayName;
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 */
+    #[Column(type: 'string', length: 255)]
     protected $password;
 
-	/**
-	 * @ORM\Column(type="array")
-	 */
+    #[Column(type: 'array')]
     protected $roles = [];
 
-    /**
-     * @ORM\Column(type="boolean", options={"default": false})
-     */
+    #[Column(type: 'boolean', options: ['default' => false])]
     protected $enabled = false;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[Column(type: 'string', length: 255, nullable: true)]
     protected $confirmationToken;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[Column(type: 'datetime', nullable: true)]
     protected $passwordRequestedAt;
 
 	/**
@@ -198,7 +183,7 @@ class User implements UserInterface, EquatableInterface
 	 * This is important if, at any given point, sensitive information like
 	 * the plain-text password is stored on this object.
 	 */
-	public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
     }

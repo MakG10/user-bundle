@@ -42,7 +42,7 @@ class ChangePasswordCommand extends Command
             ->addOption('random', 'r', InputOption::VALUE_NONE, 'Generate random password');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = $input->getArgument('email');
         $password = $input->getArgument('password');

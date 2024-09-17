@@ -12,7 +12,7 @@ class UserChecker implements UserCheckerInterface
     /**
      * {@inheritDoc}
      */
-    public function checkPreAuth(UserInterface $user)
+    public function checkPreAuth(UserInterface $user): void
     {
         if (!$user instanceof \MakG\UserBundle\Entity\UserInterface) {
             return;
@@ -29,7 +29,7 @@ class UserChecker implements UserCheckerInterface
     /**
      * {@inheritDoc}
      */
-    public function checkPostAuth(UserInterface $user)
+    public function checkPostAuth(UserInterface $user): void
     {
         $this->checkPreAuth($user);
     }

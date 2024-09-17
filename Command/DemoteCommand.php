@@ -24,7 +24,7 @@ class DemoteCommand extends Command
             ->addArgument('roles', InputArgument::IS_ARRAY, 'List of roles');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $command = $this->getApplication()->find('makg:user:roles');
         $commandInput = new ArrayInput(

@@ -43,7 +43,7 @@ class UserProvider implements UserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function refreshUser(\Symfony\Component\Security\Core\User\UserInterface $user)
+    public function refreshUser(\Symfony\Component\Security\Core\User\UserInterface $user): \Symfony\Component\Security\Core\User\UserInterface
     {
         if (!$user instanceof UserInterface) {
             throw new UnsupportedUserException(
@@ -66,7 +66,7 @@ class UserProvider implements UserProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsClass(string $class)
+    public function supportsClass(string $class): bool
     {
         $userClass = $this->userManager->getUserClass();
 

@@ -1,3 +1,14 @@
 mg_user_registration:
-    resource: '@UserBundle/Controller/RegistrationController.php'
-    type: annotation
+    path: /sign-up
+    controller: MakG\UserBundle\Controller\RegistrationController::form
+    methods: [ GET, POST ]
+
+mg_user_registration_activation_required:
+    path: /registration-completed
+    controller: MakG\UserBundle\Controller\RegistrationController::activationRequired
+    methods: [ GET ]
+
+mg_user_registration_confirm:
+    path: /confirm-registration/{token}
+    controller: MakG\UserBundle\Controller\RegistrationController::confirm
+    methods: [ GET ]

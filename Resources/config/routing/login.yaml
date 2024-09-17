@@ -1,3 +1,4 @@
 mg_user_login:
-    resource: '@UserBundle/Controller/SecurityController.php'
-    type: annotation
+    path: /sign-in
+    controller: MakG\UserBundle\Controller\SecurityController::login
+    methods: [ GET, POST ]

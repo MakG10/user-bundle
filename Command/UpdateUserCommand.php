@@ -42,7 +42,7 @@ class UpdateUserCommand extends Command
             ->addOption('deactivate', 'd', InputOption::VALUE_NONE, 'Deactivate user');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = $input->getArgument('email');
         $user = $this->userProvider->loadUserByUsername($email);

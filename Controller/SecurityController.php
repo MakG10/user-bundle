@@ -4,7 +4,6 @@ namespace MakG\UserBundle\Controller;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -18,9 +17,6 @@ class SecurityController extends AbstractController
         $this->authenticationUtils = $authenticationUtils;
     }
 
-    /**
-     * @Route("/sign-in", name="mg_user_security_login")
-     */
     public function login()
     {
         $error = $this->authenticationUtils->getLastAuthenticationError();
